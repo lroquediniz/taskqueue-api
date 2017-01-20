@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.sysmap.taskqueue</groupId>
+	<artifactId>taskqueue-api</artifactId>
+
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Task Queue API</name>
+
+	<description>API de acompanhamento de execução de atividades.</description>
+	<organization>
+		<name>Sysmap Solutions</name>
+		<url>http://www.sysmap.com.br</url>
+	</organization>
+	<inceptionYear>2017</inceptionYear>
+
+	<developers>
+		<developer>
+			<name>Luan Roque</name>
+			<email>lroque.diniz@gmail.com</email>
+			<roles>
+				<role>Architect SOA</role>
+			</roles>
+			<organization>Sysmap Solutions</organization>
+			<organizationUrl>http://www.sysmap.com.br/</organizationUrl>
+		</developer>
+	</developers>
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Java version -->
+		<version.java.compiler>1.8</version.java.compiler>
+		<!-- Jboss Bom -->
+		<version.jboss.bom>8.2.1.Final</version.jboss.bom>
+		<version.surefire.plugin>2.16</version.surefire.plugin>
+		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+		<!-- Maven Plugins -->
+		<!-- Reference: https://maven.apache.org/plugins/ -->
+		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
+		<maven.dependency.plugin>2.10</maven.dependency.plugin>
+		<maven.surefire.plugin>2.19.1</maven.surefire.plugin>
+		<maven.processor.plugin>2.0.5</maven.processor.plugin>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- EJB configuration -->
+		<maven.ejb.plugin>2.5.1</maven.ejb.plugin>
+		<version.ejb>3.2</version.ejb>
+		<!-- WAR configuration -->
+		<maven.war.plugin>3.0.0</maven.war.plugin>
+		<!-- WildFly Application Server -->
+		<wildfly.maven.plugin>1.1.0.Alpha1</wildfly.maven.plugin>
+		<wildfly.server.version>10.1.0.Final</wildfly.server.version>
+		<wildfly.arquillian.container.embedded>2.0.0.Final</wildfly.arquillian.container.embedded>
+		<!-- Test dependecies -->
+		<version.junit>4.12</version.junit>
+		<version.arquillian.bom>1.1.11.Final</version.arquillian.bom>
+
+		<!-- Hibernate modules -->
+		<version.hibernate.validator>5.1.3.Final</version.hibernate.validator>
+		<version.hibernate.jpamodelgen>5.2.5.Final</version.hibernate.jpamodelgen>
+
+		<!-- Web dependencies -->
+		<version.javaee.api>7.0</version.javaee.api>
+		<version.jboss.javaee.web.7.0>1.0.2.Final</version.jboss.javaee.web.7.0>
+		<version.jboss.javaee.7.0>1.0.2.Final</version.jboss.javaee.7.0>
+		<version.jackson.core>2.8.5</version.jackson.core>
+		<version.jasperreports>6.3.1</version.jasperreports>
+		<version.itextpdf>5.0.6</version.itextpdf>
+		<version.gson>2.8.0</version.gson>
+
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
+				<version>${version.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+				<version>${version.jboss.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.ejb</groupId>
+				<artifactId>javax.ejb-api</artifactId>
+				<version>${version.ejb}</version>
+				<scope>provided</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+
+
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.annotation</groupId>
+			<artifactId>jboss-annotations-api_1.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>jaxrs-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${version.jackson.core}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${version.jackson.core}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${version.jackson.core}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${version.jackson.core}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.core</groupId>
+			<artifactId>arquillian-core-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wildfly.arquillian</groupId>
+			<artifactId>wildfly-arquillian-container-embedded</artifactId>
+			<version>2.0.2.Final</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven.war.plugin}</version>
+				<configuration>
+					<warName>taskqueue-api</warName>
+					<contextRoot>/</contextRoot>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

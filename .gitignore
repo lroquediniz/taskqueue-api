@@ -1,0 +1,14 @@
+.DS_Store
+source/.classpath
+source/.project
+source/target
+source/.settings
+source/.DS_Store
+source/.faces-config.xml.jsfdia
+source/bin
+source/MANIFEST.MF
+source/*.swp
+source/*.iml
+source/*.idea
+source/local-stage
+source/cheatsheet.xml
