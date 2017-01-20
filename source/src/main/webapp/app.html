@@ -2,6 +2,7 @@
 <html ng-app="taskqueue-api">
 	<head>
 		<title translate="app.name" ></title>
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
@@ -48,9 +49,9 @@
 									<i class="fa fa-times icon"></i>
 								</button>
 							</div>
-							<ul class="nav navbar-nav">
-								<li ng-class="{active: matchesRoute('Processamento')}">
-									<a href="#">
+							<ul class="nav navbar-nav" ng-app="taskqueue-api" ng-controller="NavController">
+								<li ng-class="{active: matchesRoute('Home')}">
+									<a href="#/Home">
 										<span class="icon fa fa-tasks"></span><span class="title" translate="menu.processamento"></span>
 									</a>
 								</li>
@@ -63,10 +64,10 @@
 										<div class="panel-body">
 											<ul class="nav navbar-nav">
 												<li ng-class="{active: matchesRoute('Pessoas')}">
-													<a href="#" translate="sub.menu.pessoa"></a>
+													<a href="#/Pessoas" translate="sub.menu.pessoa"></a>
 												</li>
 												<li ng-class="{active: matchesRoute('Atividades')}">
-													<a href="#" translate="sub.menu.atividades"></a>
+													<a href="#/Atividades" translate="sub.menu.atividades"></a>
 												</li>
 											</ul>
 										</div>
@@ -79,10 +80,12 @@
 			</div>
 			<!-- Main Content -->
 			<div class="container-fluid">
-				<div ng-app="taskqueue-api" ng-controller="FlashController" class="alert alert-dismissible" ng-class="'alert-' + flash.getMessage().cssClass" role="alert" ng-click="hideAlert()" ng-show="showAlert">
-					<message ng-bind="flash.getMessage().text"></message>
-				</div>
-				<div id="main" ng-view>
+				<div class="side-body">
+					<div ng-app="taskqueue-api" ng-controller="FlashController" class="alert alert-dismissible" ng-class="'alert-' + flash.getMessage().cssClass" role="alert" ng-click="hideAlert()" ng-show="showAlert">
+						<message ng-bind="flash.getMessage().text"></message>
+					</div>
+					<div id="main" ng-view>
+					</div>
 				</div>
 			</div>
 		</div>

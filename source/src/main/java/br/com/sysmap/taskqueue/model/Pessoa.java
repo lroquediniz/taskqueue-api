@@ -14,6 +14,7 @@ import org.hibernate.validator.constraints.Email;
 
 /**
  * Classe de mapeamento objeto relacional Pessoa.
+ * 
  * @author Luan Roque
  */
 @Entity
@@ -23,10 +24,6 @@ public class Pessoa extends BaseEntity<Long> {
 
 	@NotNull
 	private String nome;
-	
-	@NotNull
-	@Email(message = "msg.email.invalido")
-	private String email;
 
 	@NotNull
 	private Integer produtividade;
@@ -37,14 +34,6 @@ public class Pessoa extends BaseEntity<Long> {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public Integer getProdutividade() {

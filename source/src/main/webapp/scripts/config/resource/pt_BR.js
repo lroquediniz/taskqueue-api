@@ -4,6 +4,7 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		
 		'app.name': 'Task Queue API',
 		'app.name.abrv': 'Task Queue',
+		'app.description': 'API de acompanhamento de execução de atividades.',
 		'app.corporation': 'Sysmap Solutions',
 		'app.version': '1.0&#160;',
 		
@@ -12,6 +13,9 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'label.email': 'Email',
 		'label.prev': '«',
 		'label.next': '»',
+		'label.tarefas.concluidas': 'Tarefas concluídas',
+		'label.tarefas.pendentes': 'Tarefas pendentes',
+		'label.tarefas.andamento': 'Tarefas em andamento',
 		
 		'option.selecione': 'Selecione',
 		
