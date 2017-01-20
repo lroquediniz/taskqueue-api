@@ -13,6 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Classe de entidade base de mapeamento objeto relacional.
@@ -20,7 +25,10 @@ import javax.persistence.MappedSuperclass;
  *
  * @param <ID>
  */
+@JsonInclude(Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @MappedSuperclass
+@XmlRootElement
 public abstract class BaseEntity<ID> implements Serializable {
 
 	private static final long serialVersionUID = 1l;

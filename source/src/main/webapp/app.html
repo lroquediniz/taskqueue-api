@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html ng-app="taskqueue-api">
+	<head>
+		<title translate="app.name" ></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+		<!-- CSS Libs -->
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/animate.min.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/bootstrap-switch.min.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/checkbox3.min.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/dataTables.bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="theme/lib/css/bootstrap/select2.min.css">
+		<!-- CSS App -->
+		<link rel="stylesheet" type="text/css" href="theme/css/style.css">
+		<link rel="stylesheet" type="text/css" href="theme/css/themes/flat-blue.css">
+	</head>
+	<body class="flat-blue">
+		<div class="app-container expanded">
+			<div class="row content-container">
+				<nav class="navbar navbar-default navbar-fixed-top navbar-top">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="navbar-expand-toggle">
+								<i class="fa fa-bars icon"></i>
+							</button>
+							<ol class="breadcrumb navbar-breadcrumb">
+								<li class="active" translate="app.name"></li>
+							</ol>
+							<button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
+								<i class="fa fa-th icon"></i>
+							</button>
+						</div>
+					</div>
+				</nav>
+				<div class="side-menu sidebar-inverse">
+					<nav class="navbar navbar-default" role="navigation">
+						<div class="side-menu-container">
+							<div class="navbar-header">
+								<a class="navbar-brand" href="#">
+									<div class="icon"><img src="img/logo.png" width="200%"></div>
+								</a>
+								<button type="button" class="navbar-expand-toggle pull-right visible-xs fa-rotate-90">
+									<i class="fa fa-times icon"></i>
+								</button>
+							</div>
+							<ul class="nav navbar-nav">
+								<li ng-class="{active: matchesRoute('Processamento')}">
+									<a href="#">
+										<span class="icon fa fa-tasks"></span><span class="title" translate="menu.processamento"></span>
+									</a>
+								</li>
+								<li class="panel panel-default dropdown">
+									<a data-toggle="collapse" href="#dropdown-element">
+										<span class="icon fa fa-file-text-o"></span><span class="title" translate="menu.cadastro"></span>
+									</a>
+									<!-- Dropdown level 1 -->
+									<div id="dropdown-element" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ul class="nav navbar-nav">
+												<li ng-class="{active: matchesRoute('Pessoas')}">
+													<a href="#" translate="sub.menu.pessoa"></a>
+												</li>
+												<li ng-class="{active: matchesRoute('Atividades')}">
+													<a href="#" translate="sub.menu.atividades"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!-- /.navbar-collapse -->
+					</nav>
+			</div>
+			<!-- Main Content -->
+			<div class="container-fluid">
+				<div ng-app="taskqueue-api" ng-controller="FlashController" class="alert alert-dismissible" ng-class="'alert-' + flash.getMessage().cssClass" role="alert" ng-click="hideAlert()" ng-show="showAlert">
+					<message ng-bind="flash.getMessage().text"></message>
+				</div>
+				<div id="main" ng-view>
+				</div>
+			</div>
+		</div>
+		<footer class="app-footer">
+			<div class="wrapper">
+				<span class="pull-right"><texto translate="app.name.abrv"></texto>&nbsp;<a href="www.sysmap.com.br"><i class="fa fa-long-arrow-up"></i></a></span><texto translate="app.corporation"></texto>
+			</div>
+		</footer>
+		</div>
+		<!-- Javascript Theme Librarys -->
+		<script type="text/javascript" src="theme/lib/js/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/bootstrap/bootstrap.min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/bootstrap/bootstrap-switch.min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/jquery/jquery.matchHeight-min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/jquery/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/bootstrap/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/bootstrap/select2.full.min.js"></script>
+		<script type="text/javascript" src="theme/lib/js/ace/ace.js"></script>
+		<script type="text/javascript" src="theme/lib/js/ace/mode-html.js"></script>
+		<script type="text/javascript" src="theme/lib/js/ace/theme-github.js"></script>
+		<script type="text/javascript" src="theme/js/components/api.js"></script>
+		<!-- Javascript APP -->
+		<script src="scripts/vendor/modernizr-2.8.3.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/angular.js"></script>
+		<script type="text/javascript" src="scripts/vendor/angular-route.js"></script>
+		<script type="text/javascript" src="scripts/vendor/angular-resource.js"></script>
+		<script type="text/javascript" src="scripts/vendor/angular-cookies.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/mask.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/ui-bootstrap-tpls-1.3.3.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/angular-locale_pt-br.js"></script>
+		<script type="text/javascript" src="scripts/vendor/translate.js"></script>
+		<script type="text/javascript" src="scripts/vendor/ng-currency.js"></script>
+		<script type="text/javascript" src="scripts/vendor/ng-decimal.js"></script>
+		<script src="scripts/app.js"></script>
+		<script src="scripts/offcanvas.js"></script>
+		<script src="scripts/directives/datepicker.js"></script>
+		<script src="scripts/directives/timepicker.js"></script>
+		<script src="scripts/directives/datetimepicker.js"></script>
+		<script src="scripts/filters/startFromFilter.js"></script>
+		<script src="scripts/filters/genericSearchFilter.js"></script>
+		<script type="text/javascript" src="scripts/config/resourceConfig.js"></script>
+		<script type="text/javascript" src="scripts/config/resource/pt_BR.js"></script>
+		<script type="text/javascript" src="scripts/config/resource/en_US.js"></script>	
+		<script src="scripts/services/flash.js"></script>
+		<script src="scripts/services/locationParser.js"></script>
+		<script src="scripts/controllers/flashController.js"></script>
+		<script src="scripts/services/PessoaFactory.js"></script>
+		<script src="scripts/controllers/newPessoaController.js"></script>
+		<script src="scripts/controllers/searchPessoaController.js"></script>
+		<script src="scripts/controllers/editPessoaController.js"></script>
+	</body>
+</html>

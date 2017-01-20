@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -36,36 +36,38 @@
 		<!-- Jboss Bom -->
 		<version.jboss.bom>8.2.1.Final</version.jboss.bom>
 		<version.surefire.plugin>2.16</version.surefire.plugin>
-		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+		<version.version.wildfly.maven.plugin>1.0.2.Final</version.version.wildfly.maven.plugin>
 		<!-- Maven Plugins -->
 		<!-- Reference: https://maven.apache.org/plugins/ -->
-		<maven.compiler.plugin>3.5.1</maven.compiler.plugin>
-		<maven.dependency.plugin>2.10</maven.dependency.plugin>
-		<maven.surefire.plugin>2.19.1</maven.surefire.plugin>
-		<maven.processor.plugin>2.0.5</maven.processor.plugin>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<version.maven.compiler.plugin>3.5.1</version.maven.compiler.plugin>
+		<version.maven.dependency.plugin>2.10</version.maven.dependency.plugin>
+		<version.maven.surefire.plugin>2.19.1</version.maven.surefire.plugin>
+		<version.maven.processor.plugin>2.0.5</version.maven.processor.plugin>
+		<version.maven.compiler.source>1.8</version.maven.compiler.source>
+		<version.maven.compiler.target>1.8</version.maven.compiler.target>
 		<!-- EJB configuration -->
-		<maven.ejb.plugin>2.5.1</maven.ejb.plugin>
+		<version.maven.ejb.plugin>2.5.1</version.maven.ejb.plugin>
 		<version.ejb>3.2</version.ejb>
 		<!-- WAR configuration -->
-		<maven.war.plugin>3.0.0</maven.war.plugin>
+		<version.maven.war.plugin>3.0.0</version.maven.war.plugin>
 		<!-- WildFly Application Server -->
-		<wildfly.maven.plugin>1.1.0.Alpha1</wildfly.maven.plugin>
-		<wildfly.server.version>10.1.0.Final</wildfly.server.version>
-		<wildfly.arquillian.container.embedded>2.0.0.Final</wildfly.arquillian.container.embedded>
+		<version.wildfly.maven.plugin>1.1.0.Alpha1</version.wildfly.maven.plugin>
+		<version.wildfly.server>10.1.0.Final</version.wildfly.server>
+		<version.wildfly.arquillian.container.embedded>2.0.2.Final</version.wildfly.arquillian.container.embedded>
 		<!-- Test dependecies -->
 		<version.junit>4.12</version.junit>
 		<version.arquillian.bom>1.1.11.Final</version.arquillian.bom>
-
+		<!-- Reactive programming -->
+		<version.rx.java>1.2.5</version.rx.java>
 		<!-- Hibernate modules -->
 		<version.hibernate.validator>5.1.3.Final</version.hibernate.validator>
 		<version.hibernate.jpamodelgen>5.2.5.Final</version.hibernate.jpamodelgen>
 
 		<!-- Web dependencies -->
+		<version.javax.ws.rs>2.0</version.javax.ws.rs>
+		<version.javax.servlet>3.1.0</version.javax.servlet>
 		<version.javaee.api>7.0</version.javaee.api>
-		<version.jboss.javaee.web.7.0>1.0.2.Final</version.jboss.javaee.web.7.0>
-		<version.jboss.javaee.7.0>1.0.2.Final</version.jboss.javaee.7.0>
+		<version.jboss.javaee.7>1.0.4.Final</version.jboss.javaee.7>
 		<version.jackson.core>2.8.5</version.jackson.core>
 		<version.jasperreports>6.3.1</version.jasperreports>
 		<version.itextpdf>5.0.6</version.itextpdf>
@@ -74,6 +76,7 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
@@ -81,6 +84,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
@@ -88,6 +92,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
 			<dependency>
 				<groupId>javax.ejb</groupId>
 				<artifactId>javax.ejb-api</artifactId>
@@ -95,10 +100,30 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-7.0</artifactId>
+				<version>${version.jboss.javaee.7}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${version.javax.servlet}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>${version.javax.ws.rs}</version>
+				<scope>provided</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -153,7 +178,6 @@
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 
 		<dependency>
 			<groupId>javax.ejb</groupId>
@@ -217,8 +241,26 @@
 		<dependency>
 			<groupId>org.wildfly.arquillian</groupId>
 			<artifactId>wildfly-arquillian-container-embedded</artifactId>
-			<version>2.0.2.Final</version>
+			<version>${version.wildfly.arquillian.container.embedded}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.reactivex</groupId>
+			<artifactId>rxjava</artifactId>
+			<version>${version.rx.java}</version>
 		</dependency>
 
 	</dependencies>
@@ -228,7 +270,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>${maven.war.plugin}</version>
+				<version>${version.maven.war.plugin}</version>
 				<configuration>
 					<warName>taskqueue-api</warName>
 					<contextRoot>/</contextRoot>
