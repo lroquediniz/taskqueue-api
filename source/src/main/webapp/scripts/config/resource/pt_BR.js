@@ -34,6 +34,10 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'bt.adicionar': 'Adicionar',
 		'bt.close.modal': 'x',
 		'bt.editar': 'Editar',
+		'bt.iniciar': 'Iniciar',
+		'bt.mais.minutos': '+ 00:10',
+		'bt.menos.minutos': '- 00:10',
+		
 		
 		'menu.processamento': 'Processamento',
 		'menu.cadastro': 'Cadastro',
@@ -45,6 +49,9 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'title.pessoa': 'Pessoa',
 		'title.atividades': 'Atividades',
 		'title.atividade': 'Atividade',
+		'title.dashboard': 'Painel',
+		
+		
 		
 		'msg.email.invalido': 'Email inválido.',
 		'msg.registro.excluido.sucesso': 'Registro excluído com sucesso.',

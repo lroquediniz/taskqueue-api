@@ -16,25 +16,24 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 
-@NamedQueries({ 
-	@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_QUERY), 
-	@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_QUERY)
-})
+@NamedQueries({
+		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_QUERY),
+		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_QUERY) })
 @Entity
 public class LoteProcessamento extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(mappedBy="loteProcessamento")
-	@JsonManagedReference(value="atividades")
+	@OneToMany(mappedBy = "loteProcessamento")
+	@JsonManagedReference(value = "atividades")
 	private List<Atividade> atividades;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInicio;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataConclusao;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	private StatusProcessamento status;
 
@@ -46,7 +45,8 @@ public class LoteProcessamento extends BaseEntity<Long> {
 	}
 
 	/**
-	 * @param atividades the atividades to set
+	 * @param atividades
+	 *            the atividades to set
 	 */
 	public void setAtividades(List<Atividade> atividades) {
 		this.atividades = atividades;
@@ -60,7 +60,8 @@ public class LoteProcessamento extends BaseEntity<Long> {
 	}
 
 	/**
-	 * @param dataInicio the dataInicio to set
+	 * @param dataInicio
+	 *            the dataInicio to set
 	 */
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
@@ -74,7 +75,8 @@ public class LoteProcessamento extends BaseEntity<Long> {
 	}
 
 	/**
-	 * @param dataConclusao the dataConclusao to set
+	 * @param dataConclusao
+	 *            the dataConclusao to set
 	 */
 	public void setDataConclusao(Date dataConclusao) {
 		this.dataConclusao = dataConclusao;
@@ -88,24 +90,25 @@ public class LoteProcessamento extends BaseEntity<Long> {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(StatusProcessamento status) {
 		this.status = status;
 	}
-	
+
 	public interface ConstanteLoteProcessamento {
-		
+
 		String STATUS_FIELD = "status";
-		
+
 		String BUSCAR_LOTE_POR_STATUS_KEY = "LoteProcessamento.buscarLotesPorStatus";
-		
+
 		String BUSCAR_LOTE_POR_STATUS_QUERY = "select l from LoteProcessamento l where l.status = :status";
-		
+
 		String VERIFICAR_LOTE_POR_STATUS_KEY = "LoteProcessamento.verificarLotesPorStatus";
-		
+
 		String VERIFICAR_LOTE_POR_STATUS_QUERY = "select count(l) from LoteProcessamento l where l.status = :status";
-		
+
 	}
 
 }

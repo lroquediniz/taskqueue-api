@@ -1,5 +1,5 @@
 'use strict';
-angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies', 'ui.bootstrap', 'ng-currency', 'ng-decimal', 'pascalprecht.translate'])
+angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies', 'ui.bootstrap', 'ng-currency', 'ng-decimal', 'pascalprecht.translate', 'ngWebSocket'])
 	.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 		$routeProvider
 			.when('/Home',{templateUrl:'views/landing.html',controller:'LandingPageController'})
@@ -25,7 +25,17 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$window.scrollTo(0, 0);
 		}
 	 })
-	.controller('LandingPageController', function LandingPageController() {
+	.controller('LandingPageController', function LandingPageController($scope, $location) {
+		var path = window.location.pathname; 
+		var contextoWeb = path.substring(0, path.indexOf('/', 1)); 
+		var dataStream = "ws://" + window.location.host + contextoWeb + "/process";
+		var taskSocket = new WebSocket(dataStream);
+		taskSocket.onmessage = function(message) {
+			$scope.tasks = JSON.parse(message.data);
+			$scope.$apply();	   
+		};
+		 
+		
 	})
 	.controller('NavController', function NavController($scope, $location) {
 		$scope.matchesRoute = function(route) {

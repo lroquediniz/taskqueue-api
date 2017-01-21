@@ -13,7 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import br.com.sysmap.taskqueue.ProcessMethod;
+import br.com.sysmap.taskqueue.annotation.ProcessMethod;
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
 import br.com.sysmap.taskqueue.exception.ProcessamentoException;
 import br.com.sysmap.taskqueue.message.MessageApplication;

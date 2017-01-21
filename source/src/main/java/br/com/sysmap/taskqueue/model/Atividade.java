@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -15,6 +17,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 
+@NamedQueries({ 
+	@NamedQuery(name = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY, query = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_QUERY)
+})
 @Entity
 public class Atividade extends BaseEntity<Long> {
 
@@ -93,6 +98,18 @@ public class Atividade extends BaseEntity<Long> {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+	
+	public interface ConstanteAtividade {
+		
+		String STATUS_FIELD = "status";
+		
+		String BUSCAR_ATIVIDADES_POR_STATUS_KEY = "Atividade.buscarAtividadePorStatus";
+		
+		String BUSCAR_ATIVIDADES_POR_STATUS_QUERY = "select a from Atividade a where a.status = :status";
+		
+		
+		
 	}
 
 }
