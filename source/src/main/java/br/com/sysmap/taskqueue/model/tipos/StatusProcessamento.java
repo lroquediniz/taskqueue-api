@@ -1,7 +1,7 @@
 package br.com.sysmap.taskqueue.model.tipos;
 
-public enum StatusAtividade {
+public enum StatusProcessamento {
 	PENDENTE,
-	EM_ANDAMENTO,
+	EM_EXECUCAO,
 	CONCLUIDO;
 }

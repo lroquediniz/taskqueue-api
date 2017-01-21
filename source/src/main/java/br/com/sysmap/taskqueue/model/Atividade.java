@@ -11,7 +11,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import br.com.sysmap.taskqueue.model.tipos.StatusAtividade;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 
 @Entity
 public class Atividade extends BaseEntity<Long> {
@@ -28,12 +30,16 @@ public class Atividade extends BaseEntity<Long> {
 	private Pessoa pessoa;
 
 	@Enumerated(EnumType.ORDINAL)
-	private StatusAtividade status = StatusAtividade.PENDENTE;
+	private StatusProcessamento status;
 
-	private Integer tempo;
+	private Integer tempoExecucao;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date inicio;
+	private Date dataCadastro;
+	
+	@ManyToOne
+	@JsonBackReference(value="atividades")
+	private LoteProcessamento loteProcessamento;
 
 	public String getDescricao() {
 		return descricao;
@@ -59,28 +65,34 @@ public class Atividade extends BaseEntity<Long> {
 		this.pessoa = pessoa;
 	}
 
-	public StatusAtividade getStatus() {
+	public StatusProcessamento getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusAtividade status) {
+	public void setStatus(StatusProcessamento status) {
 		this.status = status;
 	}
 
-	public Integer getTempo() {
-		return tempo;
+	/**
+	 * @return Tempo de execucao da tarefa em minutos
+	 */
+	public Integer getTempoExecucao() {
+		return tempoExecucao;
 	}
 
-	public void setTempo(Integer tempo) {
-		this.tempo = tempo;
+	/**
+	 * @param tempoExecucao the tempoExecucao to set
+	 */
+	public void setTempoExecucao(Integer tempoExecucao) {
+		this.tempoExecucao = tempoExecucao;
 	}
 
-	public Date getInicio() {
-		return inicio;
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setInicio(Date inicio) {
-		this.inicio = inicio;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 }
