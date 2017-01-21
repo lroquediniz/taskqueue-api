@@ -1,0 +1,45 @@
+<div class="page-title">
+	<span class="title"  translate="title.atividade"></span>
+</div>
+
+<div class="row">
+	<form id="PessoaForm" name="PessoaForm"  role="form" class="form-horizontal">
+		<div class="card">
+			<div class="card-body">
+				
+				<div class="form-group" ng-class="{'has-error': AtividadeForm.descricao.$invalid}">
+					<label for="descricao" class="col-sm-2 control-label"  translate="label.descricao"></label>
+					<div id="descricaoControls" class="col-sm-6">
+						<input id="descricao" name="descricao" type="text" required class="form-control" ng-model="atividade.descricao"></input>
+					</div>
+				</div>
+				
+				<div class="form-group" ng-class="{'has-error': AtividadeForm.esforco.$invalid}">
+					<label for="esforco" class="col-sm-2 control-label">Esforco</label>
+					<div id="esforcoControls" class="col-sm-2">
+						<input id="esforco" name="esforco" type="number" required class="form-control" ng-model="atividade.esforco" placeholder="0 - 100"></input>
+					</div>
+				</div>
+				
+				<div class="form-group" ng-class="{'has-error': AtividadeForm.pessoa.$invalid}">
+					<label for="pessoa" class="col-sm-2 control-label">Pessoa</label>
+					<div id="pessoaControls" class="col-sm-10">
+					
+					
+					<select id="pessoa" name="pessoa" class="form-control" ng-model="atividade.pessoa" ng-options="p as p.nome for p in pessoaList track by p.id">
+						<option value="" translate="option.selecione"></option>
+					</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button id="saveAtividade" name="saveAtividade" class="btn btn-primary" ng-disabled="isClean() || AtividadeForm.$invalid" ng-click="save()" translate="bt.salvar"></button>
+						<button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()" translate="bt.voltar"></button>
+						<button id="deleteAtividade" name="deleteAtividade" class="btn btn-danger" ng-show="atividade.id" ng-click="remove()" translate="bt.excluir"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>			
+</form>

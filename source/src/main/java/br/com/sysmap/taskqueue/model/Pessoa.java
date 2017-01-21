@@ -10,8 +10,6 @@ package br.com.sysmap.taskqueue.model;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
-
 /**
  * Classe de mapeamento objeto relacional Pessoa.
  * 

@@ -1,12 +1,13 @@
-angular.module('taskqueue-api').controller('EditPessoaController', function($scope, $routeParams, $timeout, $location, flash, PessoaResource ) {
+angular.module('taskqueue-api').controller('EditAtividadeController', function($scope, $routeParams, $location, flash, AtividadeResource , PessoaResource) {
 	var self = this;
 	$scope.disabled = false;
 	$scope.$location = $location;
+	$scope.pessoaList = PessoaResource.queryAll();
 	
 	$scope.get = function() {
 		var successCallback = function(data){
 			self.original = data;
-			$scope.pessoa = new PessoaResource(self.original);
+			$scope.atividade = new AtividadeResource(self.original);
 		};
 		var errorCallback = function() {
 			mensagem = {};
@@ -14,13 +15,13 @@ angular.module('taskqueue-api').controller('EditPessoaController', function($sco
 			mensagem.params = [];
 			mensagem.type = 'error';
 			$timeout(function() {flash.setMessage(mensagem);}, 0);
-			$location.path("/Pessoas");
+			$location.path("/Atividades");
 		};
-		PessoaResource.get({PessoaId:$routeParams.PessoaId}, successCallback, errorCallback);
+		AtividadeResource.get({AtividadeId:$routeParams.AtividadeId}, successCallback, errorCallback);
 	};
 
 	$scope.isClean = function() {
-		return angular.equals(self.original, $scope.pessoa);
+		return angular.equals(self.original, $scope.atividade);
 	};
 
 	$scope.save = function() {
@@ -39,11 +40,11 @@ angular.module('taskqueue-api').controller('EditPessoaController', function($sco
 			mensagem.type = 'error';
 			flash.setMessage(mensagem);
 		};
-		$scope.pessoa.$update(successCallback, errorCallback);
+		$scope.atividade.$update(successCallback, errorCallback);
 	};
 
 	$scope.cancel = function() {
-		$location.path("/Pessoas");
+		$location.path("/Atividades");
 	};
 
 	$scope.remove = function() {
@@ -53,7 +54,7 @@ angular.module('taskqueue-api').controller('EditPessoaController', function($sco
 			mensagem.params = [];
 			mensagem.type = 'success';
 			$timeout(function() {flash.setMessage(mensagem);}, 0);
-			$location.path("/Pessoas");
+			$location.path("/Atividades");
 		};
 		var errorCallback = function(response) {
 			mensagem = {};
@@ -62,9 +63,20 @@ angular.module('taskqueue-api').controller('EditPessoaController', function($sco
 			mensagem.type = 'error';
 			flash.setMessage(mensagem);
 		}; 
-		$scope.pessoa.$remove(successCallback, errorCallback);
+		$scope.atividade.$remove(successCallback, errorCallback);
 	};
 	
+	$scope.$watch("pessoaSelection", function(selection) {
+		if (typeof selection != 'undefined') {
+			$scope.atividade.pessoa = {};
+			$scope.atividade.pessoa = selection.value;
+		}
+	});
+	$scope.statusList = [
+		"PENDENTE",  
+		"EM_ANDAMENTO",  
+		"CONCLUIDO"  
+	];
 	
 	$scope.get();
 });

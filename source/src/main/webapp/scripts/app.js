@@ -3,6 +3,9 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 	.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 		$routeProvider
 			.when('/Home',{templateUrl:'views/landing.html',controller:'LandingPageController'})
+			.when('/Atividades',{templateUrl:'views/Atividade/search.html',controller:'SearchAtividadeController'})
+			.when('/Atividades/new',{templateUrl:'views/Atividade/detail.html',controller:'NewAtividadeController'})
+			.when('/Atividades/edit/:AtividadeId',{templateUrl:'views/Atividade/detail.html',controller:'EditAtividadeController'})
 			.when('/Pessoas',{templateUrl:'views/Pessoa/search.html',controller:'SearchPessoaController'})
 			.when('/Pessoas/new',{templateUrl:'views/Pessoa/detail.html',controller:'NewPessoaController'})
 			.when('/Pessoas/edit/:PessoaId',{templateUrl:'views/Pessoa/detail.html',controller:'EditPessoaController'})

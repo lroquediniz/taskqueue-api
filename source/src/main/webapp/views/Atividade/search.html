@@ -1,15 +1,16 @@
 <div class="page-title">
-	<span class="title" translate="title.pessoas"></span>
-	<a id="Create" class="btn btn-primary pull-right" href="#/Pessoas/new"><span class="fa fa-plus"></span> <texto translate="bt.novo" ></texto> </a>
+	<span class="title" translate="title.atividades"></span>
+	<a id="Create" class="btn btn-primary pull-right" href="#/Atividades/new"><span class="fa fa-plus"></span> <texto translate="bt.novo"></texto> </a>
 </div>
+
 <div class="row">
 	<div class="card">
 		<div class="card-body">
 			<form class="form-horizontal">
 				<div class="form-group">
-					<label for="exampleInputEmail1" class="col-sm-2 control-label" translate="label.nome"></label>
+					<label for="descricao" class="col-sm-2 control-label" translate="label.descricao"></label>
 					<div class="col-sm-6">
-						<input id="nome" name="nome" class="form-control" type="text" ng-model="search.nome" ></input>
+						<input id="descricao" name="descricao" class="form-control" type="text" ng-model="search.descricao" ></input>
 					</div>
 				</div>
 				<br/>
@@ -20,14 +21,16 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th translate="label.nome"></th>
-							<th translate="label.produtividade"></th>
+							<th translate="label.descricao"></th>
+							<th translate="label.esforco"></th>
+							<th translate="label.pessoa"></th>
 						</tr>
 					</thead>
 					<tbody id="search-results-body">
 						<tr ng-repeat="result in filteredResults | startFrom:currentPage*pageSize | limitTo:pageSize">
-							<td ><a href="#/Pessoas/edit/{{result.id}}" ng-bind="result.nome"></a></td>
-							<td ><a href="#/Pessoas/edit/{{result.id}}" ng-bind="result.produtividade"></a></td>
+							<td ><a href="#/Atividades/edit/{{result.id}}" ng-bind="result.descricao"></a></td>
+							<td ><a href="#/Atividades/edit/{{result.id}}" ng-bind="result.esforco"></a></td>
+							<td ><a href="#/Atividades/edit/{{result.id}}" ng-bind="result.pessoa.nome"></a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -45,4 +48,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div>	

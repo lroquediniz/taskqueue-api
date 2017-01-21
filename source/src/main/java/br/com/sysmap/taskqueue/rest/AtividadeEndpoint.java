@@ -20,6 +20,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
+import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.Pessoa;
 import br.com.sysmap.taskqueue.util.Constantes;
 
@@ -27,25 +28,24 @@ import br.com.sysmap.taskqueue.util.Constantes;
  * 
  */
 @Stateless
-@Path("/pessoas")
-public class PessoaEndpoint {
+@Path("/atividades")
+public class AtividadeEndpoint {
 	
 	@PersistenceContext(unitName = Constantes.DataSource.PERSISTENCE_UNIT_NAME)
 	private EntityManager em;
 
 	@POST
 	@Consumes("application/json")
-	public Response create(Pessoa entity) {
+	public Response create(Atividade entity) {
+		entity.setPessoa(em.getReference(Pessoa.class, entity.getPessoa().getId()));
 		em.persist(entity);
-		return Response.created(
-				UriBuilder.fromResource(PessoaEndpoint.class)
-						.path(String.valueOf(entity.getId())).build()).build();
+		return Response.created(UriBuilder.fromResource(AtividadeEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
 	}
 
 	@DELETE
 	@Path("/{id:[0-9][0-9]*}")
 	public Response deleteById(@PathParam("id") Long id) {
-		Pessoa entity = em.find(Pessoa.class, id);
+		Atividade entity = em.find(Atividade.class, id);
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
@@ -57,12 +57,11 @@ public class PessoaEndpoint {
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces("application/json")
 	public Response findById(@PathParam("id") Long id) {
-		TypedQuery<Pessoa> findByIdQuery = em
-				.createQuery(
-						"SELECT DISTINCT p FROM Pessoa p WHERE p.id = :entityId ORDER BY p.id",
-						Pessoa.class);
+		TypedQuery<Atividade> findByIdQuery = em.createQuery(
+				"SELECT DISTINCT a FROM Atividade a LEFT JOIN FETCH a.pessoa WHERE a.id = :entityId ORDER BY a.id",
+				Atividade.class);
 		findByIdQuery.setParameter("entityId", id);
-		Pessoa entity;
+		Atividade entity;
 		try {
 			entity = findByIdQuery.getSingleResult();
 		} catch (NoResultException nre) {
@@ -76,24 +75,23 @@ public class PessoaEndpoint {
 
 	@GET
 	@Produces("application/json")
-	public List<Pessoa> listAll(@QueryParam("start") Integer startPosition,
-			@QueryParam("max") Integer maxResult) {
-		TypedQuery<Pessoa> findAllQuery = em.createQuery(
-				"SELECT DISTINCT p FROM Pessoa p ORDER BY p.id", Pessoa.class);
+	public List<Atividade> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
+		TypedQuery<Atividade> findAllQuery = em.createQuery(
+				"SELECT DISTINCT a FROM Atividade a LEFT JOIN FETCH a.pessoa ORDER BY a.id", Atividade.class);
 		if (startPosition != null) {
 			findAllQuery.setFirstResult(startPosition);
 		}
 		if (maxResult != null) {
 			findAllQuery.setMaxResults(maxResult);
 		}
-		final List<Pessoa> results = findAllQuery.getResultList();
+		final List<Atividade> results = findAllQuery.getResultList();
 		return results;
 	}
 
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
 	@Consumes("application/json")
-	public Response update(@PathParam("id") Long id, Pessoa entity) {
+	public Response update(@PathParam("id") Long id, Atividade entity) {
 		if (entity == null) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
@@ -103,14 +101,13 @@ public class PessoaEndpoint {
 		if (!id.equals(entity.getId())) {
 			return Response.status(Status.CONFLICT).entity(entity).build();
 		}
-		if (em.find(Pessoa.class, id) == null) {
+		if (em.find(Atividade.class, id) == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		try {
 			entity = em.merge(entity);
 		} catch (OptimisticLockException e) {
-			return Response.status(Response.Status.CONFLICT)
-					.entity(e.getEntity()).build();
+			return Response.status(Response.Status.CONFLICT).entity(e.getEntity()).build();
 		}
 
 		return Response.noContent().build();

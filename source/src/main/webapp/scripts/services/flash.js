@@ -45,4 +45,3 @@ angular.module('taskqueue-api').factory('flash',
 			}
 		} ]);
 
-

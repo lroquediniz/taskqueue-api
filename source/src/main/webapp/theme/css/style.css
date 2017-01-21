@@ -708,7 +708,7 @@ a:hover {
 .btn {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	border-radius: 1px;
+	border-radius: 5px;
 	border-width: 1px;
 	font-family: 'Roboto Condensed', sans-serif;
 }
@@ -742,7 +742,7 @@ a:hover {
 }
 
 .form-control {
-	border-radius: 1px;
+	border-radius: 5px;
 	box-shadow: none;
 }
 
