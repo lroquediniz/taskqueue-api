@@ -15,7 +15,7 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'label.next': '»',
 		'label.tarefas.concluidas': 'Tarefas concluídas',
 		'label.tarefas.pendentes': 'Tarefas pendentes',
-		'label.tarefas.andamento': 'Tarefas em andamento',
+		'label.percentual.conclusao': 'Percentual de conclusão',
 		'label.produtividade': 'Produtividade',
 		'label.descricao': 'Descrição',
 		'label.esforco': 'Esforço',
@@ -57,7 +57,9 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'msg.registro.excluido.sucesso': 'Registro excluído com sucesso.',
 		'msg.registro.salvo.sucesso': 'Registro salvo com sucesso.',
 		'msg.erro.nao.identificado': 'Ocorreu uma falha de sistema, favor contactar o administrador do sistema.',
-		'msg.valor.data.invalido': 'Valor de data inválido.',
+		'msg.nenhuma.atividade.cadastrada': 'Nenhuma atividade cadastrada no sistema.',
+		'msg.execucao.atividades.iniciada': 'Execução de atividades executa.',
+		
 		'msg.erro.email.cadastrado': 'Email já cadastrado no sistema',
 		'msg.erro.usuario.nao.encontrado': 'Usuário não encontrado.',
 	});

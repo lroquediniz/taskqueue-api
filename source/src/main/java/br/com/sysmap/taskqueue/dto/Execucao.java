@@ -6,7 +6,7 @@ public class Execucao {
 
 	private Integer qtdTarefasPendentes;
 
-	private Integer qtdTarefasAndamento;
+	private Integer qtdTarefasConcluidas;
 
 	private Integer porcentagem;
 
@@ -20,15 +20,13 @@ public class Execucao {
 		this.qtdTarefasPendentes = qtdTarefasPendentes;
 	}
 
-	public Integer getQtdTarefasAndamento() {
-		return qtdTarefasAndamento;
+	public Integer getQtdTarefasConcluidas() {
+		return qtdTarefasConcluidas;
 	}
 
-	public void setQtdTarefasAndamento(Integer qtdTarefasAndamento) {
-		this.qtdTarefasAndamento = qtdTarefasAndamento;
+	public void setQtdTarefasConcluidas(Integer qtdTarefasConcluidas) {
+		this.qtdTarefasConcluidas = qtdTarefasConcluidas;
 	}
-
-
 
 	public Integer getPorcentagem() {
 		return porcentagem;

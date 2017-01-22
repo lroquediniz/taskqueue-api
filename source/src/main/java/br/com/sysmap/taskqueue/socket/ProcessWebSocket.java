@@ -39,14 +39,16 @@ public class ProcessWebSocket {
 	
 	private void sendTimeToAll(Session session) {
 		Execucao execucao = this.service.getExecucao();
-		Gson gson = new GsonBuilder().create();
-		String execucaoStr = gson.toJson(execucao);
-		sessoes = session.getOpenSessions();
-		for (Session sess : sessoes) {
-			try {
-				sess.getBasicRemote().sendText(execucaoStr);
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
+		if (execucao != null) {
+			Gson gson = new GsonBuilder().create();
+			String execucaoStr = gson.toJson(execucao);
+			sessoes = session.getOpenSessions();
+			for (Session sess : sessoes) {
+				try {
+					sess.getBasicRemote().sendText(execucaoStr);
+				} catch (IOException ioe) {
+					System.out.println(ioe.getMessage());
+				}
 			}
 		}
 	}

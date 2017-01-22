@@ -8,6 +8,9 @@
  */
 package br.com.sysmap.taskqueue.message;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class MessageApplication {
 
 	private String message;

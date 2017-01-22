@@ -25,16 +25,57 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$window.scrollTo(0, 0);
 		}
 	 })
-	.controller('LandingPageController', function LandingPageController($scope, $location) {
+	.controller('LandingPageController', function LandingPageController($scope, $location, ExecucaoResource,flash) {
+		//{"qtdTarefasPendentes":0,"qtdTarefasAndamento":1,"porcentagem":0,"atualizacaoAtividades":[{"idAtividade":1,"percentualExecucao":0}]}
+		
+		$scope.init = function() {
+			$scope.execucao = {};
+			$scope.execucao.qtdTarefasPendentes = 0;
+			$scope.execucao.qtdTarefasAndamento = 0;
+			$scope.execucao.porcentagem = 0;
+			var successCallback = function(response){
+				$scope.tarefasPendentes = response.data;
+				if($scope.tarefasPendentes) {
+					$scope.execucao.qtdTarefasPendentes = $scope.tarefasPendentes.length;
+				}
+			};
+			var errorCallback = function(response) {
+				$scope.execucao.qtdTarefasPendentes = 0;
+			};
+			ExecucaoResource.recuperaAtividadesPendentes(successCallback, errorCallback);
+		}
+		
+		$scope.iniciarExecucaoAtividades = function() {
+			
+			var successCallback = function(response){
+				var mensagem = {};
+				mensagem.key = 'msg.execucao.atividades.iniciada';
+				mensagem.params = [];
+				mensagem.type = 'success';
+				flash.setMessage(mensagem);
+			};
+			var errorCallback = function(response) {
+				var mensagem = {};
+				mensagem.key = response.data.message;
+				mensagem.params = [];
+				mensagem.type = 'error';
+				flash.setMessage(mensagem);
+			};
+			
+			ExecucaoResource.get(successCallback,errorCallback);
+		}
+		
+		$scope.init();
+		
 		var path = window.location.pathname; 
 		var contextoWeb = path.substring(0, path.indexOf('/', 1)); 
 		var dataStream = "ws://" + window.location.host + contextoWeb + "/process";
 		var taskSocket = new WebSocket(dataStream);
 		taskSocket.onmessage = function(message) {
-			$scope.tasks = JSON.parse(message.data);
+			$scope.execucao = JSON.parse(message.data);
+			console.log($scope.execucao);
 			$scope.$apply();	   
 		};
-		 
 		
 	})
 	.controller('NavController', function NavController($scope, $location) {

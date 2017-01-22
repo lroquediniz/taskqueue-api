@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
@@ -22,6 +24,7 @@ import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.Atividade.ConstanteAtividade;
 import br.com.sysmap.taskqueue.model.LoteProcessamento;
 import br.com.sysmap.taskqueue.model.LoteProcessamento.ConstanteLoteProcessamento;
+import br.com.sysmap.taskqueue.model.tipos.OperacaoTempo;
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 import br.com.sysmap.taskqueue.util.Constantes;
 
@@ -36,6 +39,10 @@ public class LoteProcessamentoService {
 
 	private Execucao execucao;
 	
+	private Atividade atividadeMaiorTempo;
+	
+	private Integer tempoAdicionado;
+	
 	public void validarLoteExecucao() throws ProcessamentoException {
 		TypedQuery<Long> q = em.createNamedQuery(ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_KEY, Long.class);
 		q.setParameter(ConstanteLoteProcessamento.STATUS_FIELD, StatusProcessamento.EM_EXECUCAO);
@@ -47,20 +54,25 @@ public class LoteProcessamentoService {
 
 	public LoteProcessamento iniciarProcessamento() {
 		this.lote = criarLoteProcessamento();
-		this.lote.getAtividades().stream().forEach(a -> a.setStatus(StatusProcessamento.EM_EXECUCAO));
-		em.persist(this.lote);
 		return lote;
 	}
 
 	private LoteProcessamento criarLoteProcessamento() {
 		LoteProcessamento lote = new LoteProcessamento();
 		lote.setDataInicio(new Date());
-		lote.setAtividades(this.recuperaListaAtividades());
+		List<Atividade> listaAtividades = this.recuperaListaAtividadePendentes();
+		if (listaAtividades.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		Comparator<Atividade> comp = (a1, a2) -> Integer.compare( a1.getTempoExecucao(), a2.getTempoExecucao());
+		this.atividadeMaiorTempo = listaAtividades.stream().max(comp).get();
+		
+		lote.setAtividades(listaAtividades);
 		lote.setStatus(StatusProcessamento.EM_EXECUCAO);
 		return lote;
 	}
 
-	private List<Atividade> recuperaListaAtividades() {
+	public List<Atividade> recuperaListaAtividadePendentes() {
 		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY,
 				Atividade.class);
 		q.setParameter(ConstanteLoteProcessamento.STATUS_FIELD, StatusProcessamento.PENDENTE);
@@ -71,18 +83,16 @@ public class LoteProcessamentoService {
 		em.persist(atividade);
 	}
 	
-	@Schedule(second="*/1")
+	@Schedule(hour="*", minute="*" , second="*/1")
 	public void atualizarPorcentagens() {
-		if (this.lote != null) {
-			
+		if (this.lote != null && this.lote.getStatus().equals(StatusProcessamento.EM_EXECUCAO)) {
+
 			LocalDateTime horaInicioProcessLote = LocalDateTime.ofInstant(this.lote.getDataInicio().toInstant(), ZoneId.systemDefault());
 			List<Atividade> atividades = this.lote.getAtividades();
 			Execucao execucao = new Execucao();
 			execucao.setPorcentagem(0);
-			execucao.setQtdTarefasAndamento(atividades.size());
-			
-			execucao.setQtdTarefasPendentes(0);
-			
+			execucao.setQtdTarefasConcluidas(0);
+			execucao.setQtdTarefasPendentes(this.lote.getAtividades().size());
 			execucao.setAtualizacaoAtividades(new ArrayList<>());
 			AtualizacaoAtividade atualizacaoAtividade = null;
 			
@@ -92,28 +102,47 @@ public class LoteProcessamentoService {
 			BigDecimal porcentagem = new BigDecimal(Constantes.Params.BASE_PORCENTAGEM);
 			
 			for (Atividade atividade : atividades) {
-				minutosAtividade = new BigDecimal(atividade.getTempoExecucao().longValue());
-				minutosExecutados = new BigDecimal(ChronoUnit.MINUTES.between(horaInicioProcessLote, LocalDateTime.now()));
-				percentualExecucao = minutosExecutados.divide(minutosAtividade.multiply(porcentagem)).intValue();
+				minutosAtividade = new BigDecimal(atividade.getTempoExecucao().longValue() * 60);
 				
+				LocalDateTime horaAtual = LocalDateTime.now();
+				if (this.tempoAdicionado != null) {
+					horaAtual.minusMinutes(this.tempoAdicionado);
+				}
+				minutosExecutados = new BigDecimal(ChronoUnit.SECONDS.between(horaInicioProcessLote, horaAtual));
+				
+				percentualExecucao = Float.valueOf((minutosExecutados.floatValue() / minutosAtividade.floatValue()) * porcentagem.floatValue()).intValue();
+				System.out.println(percentualExecucao);
 				if (percentualExecucao.intValue() >= porcentagem.intValue()) {
 					execucao.setQtdTarefasPendentes(execucao.getQtdTarefasPendentes() - 1);
-					execucao.setQtdTarefasAndamento(execucao.getQtdTarefasAndamento() + 1);
+					execucao.setQtdTarefasConcluidas(execucao.getQtdTarefasConcluidas() + 1);
 					if (!atividade.getStatus().equals(StatusProcessamento.CONCLUIDO)) {
 						atividade.setStatus(StatusProcessamento.CONCLUIDO);
-						this.atualizarStatusAtividade(atividade);
+						//this.atualizarStatusAtividade(atividade);
 					}
 				}
 				atualizacaoAtividade = new AtualizacaoAtividade();
-				atualizacaoAtividade.setPercentualExecucao(percentualExecucao);
-				atualizacaoAtividade.setIdAtividade(atividade.getId());
+				atualizacaoAtividade.setPercentualExecucao(percentualExecucao < porcentagem.intValue() ? percentualExecucao : porcentagem.intValue());
+				atualizacaoAtividade.setDescricao(new StringBuilder(atividade.getDescricao()).append(" ").append(atividade.getPessoa().getNome()).toString());
 				execucao.getAtualizacaoAtividades().add(atualizacaoAtividade);
-				if (atividade.getTempoExecucao() > execucao.getPorcentagem()) {
+				if (atividade.getTempoExecucao().equals(this.atividadeMaiorTempo.getTempoExecucao())) {
 					execucao.setPorcentagem(percentualExecucao);
 				}
 			}
+			finalizarLote();
 			this.execucao = execucao;
 		}
+	}
+	
+	public void atualizarTempo(OperacaoTempo operacaoTempo) {
+		this.tempoAdicionado = operacaoTempo.calcular(this.tempoAdicionado);
+	}
+
+	private void finalizarLote() {
+		Predicate<Atividade> predicate = a -> a.getStatus().equals(StatusProcessamento.CONCLUIDO);
+		if (this.lote.getAtividades().stream().allMatch(predicate)) {
+			this.lote.setStatus(StatusProcessamento.CONCLUIDO);
+			
+		} ;
 	}
 
 	/**
@@ -138,7 +167,7 @@ public class LoteProcessamentoService {
 	public void setExecucao(Execucao execucao) {
 		this.execucao = execucao;
 	}
-	
+
 	
 
 }
