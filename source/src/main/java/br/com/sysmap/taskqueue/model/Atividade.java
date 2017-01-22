@@ -16,7 +16,12 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
-
+/**
+ * Classe de entidade de mapeamento objeto relacional.
+ * @author Luan Roque
+ *
+ * @param <ID>
+ */
 @NamedQueries({ 
 	@NamedQuery(name = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY, query = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_QUERY)
 })
@@ -24,28 +29,54 @@ import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 public class Atividade extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * Descrição.
+	 */
 	@NotNull
 	private String descricao;
 
+	/**
+	 * Esforço.
+	 */
 	@NotNull
 	private Integer esforco;
 
+	/**
+	 * Pessoa.
+	 */
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Pessoa pessoa;
 
+	/**
+	 * Status.
+	 */
 	@Enumerated(EnumType.ORDINAL)
 	private StatusProcessamento status;
 
+	/**
+	 * Tempo de Execução
+	 * 
+	 */
 	private Integer tempoExecucao;
 
+	/**
+	 * Data de cadastro.
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCadastro;
 	
+	/**
+	 * Lote de processamento.
+	 */
 	@ManyToOne
 	@JsonBackReference(value="atividades")
 	private LoteProcessamento loteProcessamento;
 
+	/*
+	 * Getters and Setters.
+	 */
+	
 	public String getDescricao() {
 		return descricao;
 	}

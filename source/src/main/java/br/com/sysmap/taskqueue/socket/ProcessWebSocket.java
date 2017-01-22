@@ -17,7 +17,11 @@ import com.google.gson.GsonBuilder;
 
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
 import br.com.sysmap.taskqueue.dto.Execucao;
-
+/**
+ * Web Socket para monitoramento de atividades em processamento.
+ * @author luan
+ *
+ */
 @ServerEndpoint("/process")
 public class ProcessWebSocket {
 
@@ -28,16 +32,23 @@ public class ProcessWebSocket {
 	@Inject
 	private LoteProcessamentoService service;
 
-
+	/**
+	 * Recebe uma conexão de cliente criando um schedule 
+	 * com tempo de 1 segundo para recuperar informações do processamento.
+	 * @param session
+	 */
 	@OnOpen
 	public void onOpen(Session session) {
 		sessoes = session.getOpenSessions();
 		if (sessoes.size() == 1) {
-			timer.scheduleAtFixedRate(() -> sendTimeToAll(session), 0, 1, TimeUnit.SECONDS);
+			timer.scheduleAtFixedRate(() -> enviarAtualizacoesProcessamentoParaClientes(session), 0, 1, TimeUnit.SECONDS);
 		}
 	}
-	
-	private void sendTimeToAll(Session session) {
+	/**
+	 * Envia atulização de um processamento para todos os cliente conectados.
+	 * @param session
+	 */
+	private void enviarAtualizacoesProcessamentoParaClientes(Session session) {
 		Execucao execucao = this.service.getExecucao();
 		if (execucao != null) {
 			Gson gson = new GsonBuilder().create();

@@ -1,10 +1,3 @@
-/*
- * Sysmap Solutions.
- * Este é um software proprietário; não é permitida a distribuição total ou parcial deste código sem a autorização.
- * Se você recebeu uma cópia, informe-nos através dos contatos abaixo.
- * Site: www.sysmap.com.br
- * E-mail: contato@sysmap.com.br
- */
 package br.com.sysmap.taskqueue.model;
 
 import java.io.Serializable;
@@ -32,11 +25,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public abstract class BaseEntity<ID> implements Serializable {
 
 	private static final long serialVersionUID = 1l;
-
+	
+	/**
+	 * Identificador generics java com com auto incremento IDENTITY.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private ID id;
 
+	/*
+	 * Getters and Setters
+	 */
+	
 	public ID getId() {
 		return id;
 	}
@@ -45,6 +45,10 @@ public abstract class BaseEntity<ID> implements Serializable {
 		this.id = id;
 	}
 
+	/*
+	 * HashCode and Equals.
+	 */
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

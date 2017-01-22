@@ -15,8 +15,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
+import br.com.sysmap.taskqueue.dto.MessageApplication;
 import br.com.sysmap.taskqueue.exception.ProcessamentoException;
-import br.com.sysmap.taskqueue.message.MessageApplication;
 
 /**
  * Filtro para requisicoes REST.
@@ -51,7 +51,8 @@ public class LockFilter implements ContainerRequestFilter {
 		CONFLICT = Response.status(Response.Status.CONFLICT).entity(new MessageApplication("msg.lotes.em.processamento")).build();
 	}
 	/**
-	 * Metodo do filtro.
+	 * Metodo de filtragem de requisições validando processamento de lotes em execução,
+	 * caso exista impossibilita acessar funcionalidades do processamento.
 	 */
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {

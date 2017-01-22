@@ -42,7 +42,7 @@ public class AtividadeEndpoint {
 	private EntityManager em;
 
 	/**
-	 * Grava entidade {@link Atividade}.
+	 * Grava entidade Atividade.
 	 * @param entity - {@link Atividade} a ser gravas
 	 * @return Response - {@link Response} objeto de resposta http.
 	 */

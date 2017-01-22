@@ -15,7 +15,12 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
-
+/**
+ * Classe de entidade de mapeamento objeto relacional.
+ * @author Luan Roque
+ *
+ * @param <ID>
+ */
 @NamedQueries({
 		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_QUERY),
 		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_QUERY) })
@@ -23,17 +28,29 @@ import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 public class LoteProcessamento extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * Atividades
+	 */
 	@OneToMany(mappedBy = "loteProcessamento")
 	@JsonManagedReference(value = "atividades")
 	private List<Atividade> atividades;
 
+	/**
+	 * Data inicio.
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInicio;
 
+	/**
+	 * Data Conclusao
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataConclusao;
 
+	/**
+	 * Status do processamento.
+	 */
 	@Enumerated(EnumType.ORDINAL)
 	private StatusProcessamento status;
 

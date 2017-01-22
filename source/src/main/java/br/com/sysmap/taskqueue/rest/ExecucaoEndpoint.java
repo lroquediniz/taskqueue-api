@@ -13,20 +13,28 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
-import br.com.sysmap.taskqueue.message.MessageApplication;
+import br.com.sysmap.taskqueue.dto.MessageApplication;
 import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.tipos.OperacaoTempo;
 
 /**
- * Endpoind EJB Atividade. Endpoint inteligente para servico de cadastro de
- * atividades.
+ * Endpoind Execuções de atividades.
+ * @author Luan Roque.
+ * 
  */
 @Path("/execucao")
 public class ExecucaoEndpoint {
 
+	/**
+	 * Servico de processamento injetado por CDI.
+	 */
 	@Inject
 	private LoteProcessamentoService service;
 
+	/**
+	 * Recupera processamento por id;
+	 * @return {@link Response}
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@PermitAll
@@ -41,6 +49,10 @@ public class ExecucaoEndpoint {
 		return resposta;
 	}
 	
+	/**
+	 * Recupera lista de atividades pendentes.
+	 * @return List<{@link Atividade}> - atividades.
+	 */
 	@GET
 	@Path("/recuperaAtividadesPendentes")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -48,7 +60,10 @@ public class ExecucaoEndpoint {
 	public List<Atividade> recuperaAtividadesPendentes() {
 		return service.recuperaListaAtividadePendentes();
 	}
-	
+	/**
+	 * Altera o tempo de processamento das atividades.
+	 * @param {@link OperacaoTempo} operacao
+	 */
 	@GET
 	@Path("/alterarTempo/{operacao}")
 	@PermitAll

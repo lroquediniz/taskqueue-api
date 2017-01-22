@@ -20,19 +20,29 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
+
+import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.Pessoa;
 import br.com.sysmap.taskqueue.util.Constantes;
 
 /**
- * 
+ * Endpoind EJB Pessoa.
+ * Endpoint inteligente para servico de cadastro de atividades.
  */
 @Stateless
 @Path("/pessoas")
 public class PessoaEndpoint {
-	
+	/**
+	 * Gerenciador de entidades JPA.
+	 */
 	@PersistenceContext(unitName = Constantes.DataSource.PERSISTENCE_UNIT_NAME)
 	private EntityManager em;
 
+	/**
+	 * Grava entidade Pessoa.
+	 * @param entity - {@link Pessoa} a ser gravas
+	 * @return Response - {@link Response} objeto de resposta http.
+	 */
 	@POST
 	@Consumes("application/json")
 	public Response create(Pessoa entity) {
@@ -42,6 +52,11 @@ public class PessoaEndpoint {
 						.path(String.valueOf(entity.getId())).build()).build();
 	}
 
+	/**
+	 * Remove uma {@link Pessoa} cadastrada pelo idenficador.
+	 * @param id - {@link Long} identificador.
+	 * @return Response - {@link Response} objeto de resposta http.
+	 */
 	@DELETE
 	@Path("/{id:[0-9][0-9]*}")
 	public Response deleteById(@PathParam("id") Long id) {
@@ -53,6 +68,11 @@ public class PessoaEndpoint {
 		return Response.noContent().build();
 	}
 
+	/**
+	 * Recupera uma {@link Pessoa} pelo idenficador.
+	 * @param id - {@link Long} identificador.
+	 * @return Response - {@link Response} objeto de resposta http.
+	 */
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces("application/json")
@@ -74,6 +94,12 @@ public class PessoaEndpoint {
 		return Response.ok(entity).build();
 	}
 
+	/**
+	 * Recupera uma List<{@link Pessoa}> paginados.
+	 * @param startPosition - {@link Integer} posicao de inicio da consulta.
+	 * @param maxResult - {@link Integer} posicao final da consulta.
+	 * @return  List<{@link Pessoa}> - Lista de Pessoas.
+	 */
 	@GET
 	@Produces("application/json")
 	public List<Pessoa> listAll(@QueryParam("start") Integer startPosition,
@@ -90,6 +116,12 @@ public class PessoaEndpoint {
 		return results;
 	}
 
+	/**
+	 * Atualiza uma {@link Pessoa} por id e entidade com atualização.
+	 * @param id - {@link Long} identificador da {@link Pessoa}
+	 * @param entity - {@link Pessoa} com valores atualizados.
+	 * @return Response - {@link Response} objeto de resposta http.
+	 */
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
 	@Consumes("application/json")
