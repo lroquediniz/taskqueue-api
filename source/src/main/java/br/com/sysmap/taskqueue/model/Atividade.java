@@ -23,7 +23,9 @@ import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
  * @param <ID>
  */
 @NamedQueries({ 
-	@NamedQuery(name = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY, query = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_QUERY)
+	@NamedQuery(name = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY, query = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_QUERY),
+	@NamedQuery(name = Atividade.ConstanteAtividade.BUSCAR_TODOS_KEY, query = Atividade.ConstanteAtividade.BUSCAR_TODOS_QUERY),
+	@NamedQuery(name = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADE_POR_ID_KEY, query = Atividade.ConstanteAtividade.BUSCAR_ATIVIDADE_POR_ID_QUERY)
 })
 @Entity
 public class Atividade extends BaseEntity<Long> {
@@ -131,14 +133,28 @@ public class Atividade extends BaseEntity<Long> {
 		this.dataCadastro = dataCadastro;
 	}
 	
+	/**
+	 * Interface de constantes de consultas de {@link Atividade}.
+	 * @author luan
+	 *
+	 */
 	public interface ConstanteAtividade {
 		
 		String STATUS_FIELD = "status";
+		
+		String ID_FIELD = "id";
 		
 		String BUSCAR_ATIVIDADES_POR_STATUS_KEY = "Atividade.buscarAtividadePorStatus";
 		
 		String BUSCAR_ATIVIDADES_POR_STATUS_QUERY = "select a from Atividade a where a.status = :status";
 		
+		String BUSCAR_ATIVIDADE_POR_ID_KEY = "Atividade.buscarAtividadePorId";
+		
+		String BUSCAR_ATIVIDADE_POR_ID_QUERY = "SELECT DISTINCT a FROM Atividade a LEFT JOIN FETCH a.pessoa WHERE a.id = :id ORDER BY a.id";
+		
+		String BUSCAR_TODOS_KEY = "Atividade.buscarTodos";
+		
+		String BUSCAR_TODOS_QUERY = "SELECT DISTINCT a FROM Atividade a LEFT JOIN FETCH a.pessoa ORDER BY a.id";
 		
 		
 	}

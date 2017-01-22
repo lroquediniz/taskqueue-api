@@ -20,6 +20,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.sysmap.taskqueue.dto.AtualizacaoAtividade;
 import br.com.sysmap.taskqueue.dto.Execucao;
+import br.com.sysmap.taskqueue.exception.NenhumaAtividadeException;
 import br.com.sysmap.taskqueue.exception.ProcessamentoException;
 import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.Atividade.ConstanteAtividade;
@@ -81,9 +82,9 @@ public class LoteProcessamentoService {
 	/**
 	 * Inicia processamento em lote de atividades.
 	 * @return {@link LoteProcessamento}
+	 * @throws NenhumaAtividadeException 
 	 */
-	public LoteProcessamento iniciarProcessamento() {
-		LOGGER.log(Level.INFO, "Inicio de processamento de Lote de Atividades");
+	public LoteProcessamento iniciarProcessamento() throws NenhumaAtividadeException {
 		this.execucao = new Execucao();
 		this.lote = criarLoteProcessamento();
 		return lote;
@@ -92,15 +93,17 @@ public class LoteProcessamentoService {
 	/**
 	 * Cria um novo lote de processamento.
 	 * @return {@link LoteProcessamento}
+	 * @throws {@link NenhumaAtividadeException} NenhumaAtividadeException 
 	 */
-	private LoteProcessamento criarLoteProcessamento() {
+	private LoteProcessamento criarLoteProcessamento() throws NenhumaAtividadeException {
 		LoteProcessamento lote = new LoteProcessamento();
 		this.alteracaoTempo = 0L;
 		lote.setDataInicio(new Date());
 		List<Atividade> listaAtividades = this.recuperaListaAtividadePendentes();
 		if (listaAtividades.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new NenhumaAtividadeException();
 		}
+		LOGGER.log(Level.INFO, "Inicio de processamento de Lote de Atividades");
 		Comparator<Atividade> comp = (a1, a2) -> Integer.compare(a1.getTempoExecucao(), a2.getTempoExecucao());
 		this.atividadeMaiorTempo = listaAtividades.stream().max(comp).get();
 
@@ -117,6 +120,17 @@ public class LoteProcessamentoService {
 		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY,
 				Atividade.class);
 		q.setParameter(ConstanteLoteProcessamento.STATUS_FIELD, StatusProcessamento.PENDENTE);
+		return q.getResultList();
+	}
+	
+	/**
+	 * Recupera a lista de atividades com status concluido.
+	 * @return List<{@link Atividade}>
+	 */
+	public List<Atividade> recuperaListaAtividadeProcessadas() {
+		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY,
+				Atividade.class);
+		q.setParameter(ConstanteLoteProcessamento.STATUS_FIELD, StatusProcessamento.CONCLUIDO);
 		return q.getResultList();
 	}
 	

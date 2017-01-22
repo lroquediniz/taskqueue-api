@@ -15,20 +15,23 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
+
 /**
  * Classe de entidade de mapeamento objeto relacional.
+ * 
  * @author Luan Roque
  *
  * @param <ID>
  */
 @NamedQueries({
+		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_TODOS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_TODOS_QUERY),
 		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.BUSCAR_LOTE_POR_STATUS_QUERY),
 		@NamedQuery(name = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_KEY, query = LoteProcessamento.ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_QUERY) })
 @Entity
 public class LoteProcessamento extends BaseEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Atividades
 	 */
@@ -61,62 +64,41 @@ public class LoteProcessamento extends BaseEntity<Long> {
 		return atividades;
 	}
 
-	/**
-	 * @param atividades
-	 *            the atividades to set
-	 */
-	public void setAtividades(List<Atividade> atividades) {
-		this.atividades = atividades;
-	}
-
-	/**
-	 * @return the dataInicio
-	 */
 	public Date getDataInicio() {
 		return dataInicio;
 	}
 
-	/**
-	 * @param dataInicio
-	 *            the dataInicio to set
-	 */
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	/**
-	 * @return the dataConclusao
-	 */
 	public Date getDataConclusao() {
 		return dataConclusao;
 	}
 
-	/**
-	 * @param dataConclusao
-	 *            the dataConclusao to set
-	 */
 	public void setDataConclusao(Date dataConclusao) {
 		this.dataConclusao = dataConclusao;
 	}
 
-	/**
-	 * @return the status
-	 */
 	public StatusProcessamento getStatus() {
 		return status;
 	}
 
-	/**
-	 * @param status
-	 *            the status to set
-	 */
 	public void setStatus(StatusProcessamento status) {
 		this.status = status;
+	}
+
+	public void setAtividades(List<Atividade> atividades) {
+		this.atividades = atividades;
 	}
 
 	public interface ConstanteLoteProcessamento {
 
 		String STATUS_FIELD = "status";
+		
+		String BUSCAR_TODOS_KEY = "LoteProcessamento.buscarTodos";
+
+		String BUSCAR_TODOS_QUERY = "SELECT DISTINCT l FROM LoteProcessamento l LEFT JOIN FETCH l.atividades ORDER BY l.id";
 
 		String BUSCAR_LOTE_POR_STATUS_KEY = "LoteProcessamento.buscarLotesPorStatus";
 

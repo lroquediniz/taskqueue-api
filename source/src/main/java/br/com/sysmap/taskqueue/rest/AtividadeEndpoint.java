@@ -3,6 +3,7 @@ package br.com.sysmap.taskqueue.rest;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
 import br.com.sysmap.taskqueue.model.Atividade;
+import br.com.sysmap.taskqueue.model.Atividade.ConstanteAtividade;
 import br.com.sysmap.taskqueue.model.Pessoa;
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 import br.com.sysmap.taskqueue.util.Constantes;
@@ -102,10 +104,8 @@ public class AtividadeEndpoint {
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces("application/json")
 	public Response findById(@PathParam("id") Long id) {
-		TypedQuery<Atividade> findByIdQuery = em.createQuery(
-				"SELECT DISTINCT a FROM Atividade a LEFT JOIN FETCH a.pessoa WHERE a.id = :entityId ORDER BY a.id",
-				Atividade.class);
-		findByIdQuery.setParameter("entityId", id);
+		TypedQuery<Atividade> findByIdQuery = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADE_POR_ID_KEY, Atividade.class);
+		findByIdQuery.setParameter(ConstanteAtividade.ID_FIELD, id);
 		Atividade entity;
 		try {
 			entity = findByIdQuery.getSingleResult();
@@ -126,9 +126,9 @@ public class AtividadeEndpoint {
 	 */
 	@GET
 	@Produces("application/json")
+	@PermitAll
 	public List<Atividade> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
-		TypedQuery<Atividade> findAllQuery = em.createQuery(
-				"SELECT DISTINCT a FROM Atividade a LEFT JOIN FETCH a.pessoa ORDER BY a.id", Atividade.class);
+		TypedQuery<Atividade> findAllQuery = em.createNamedQuery(ConstanteAtividade.BUSCAR_TODOS_KEY, Atividade.class);
 		if (startPosition != null) {
 			findAllQuery.setFirstResult(startPosition);
 		}

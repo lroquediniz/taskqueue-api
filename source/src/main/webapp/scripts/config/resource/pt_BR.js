@@ -21,6 +21,9 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'label.esforco': 'Esforço',
 		'label.pessoa': 'Pessoa',
 		'label.porcentagem.conclusao': '% Concluido',
+		'label.status': 'Status',
+		'label.concluido': 'Concluído',
+		'label.pendente': 'Pendente',
 		
 		
 		'option.selecione': 'Selecione',
@@ -58,7 +61,7 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'msg.registro.excluido.sucesso': 'Registro excluído com sucesso.',
 		'msg.registro.salvo.sucesso': 'Registro salvo com sucesso.',
 		'msg.erro.nao.identificado': 'Ocorreu uma falha de sistema, favor contactar o administrador do sistema.',
-		'msg.nenhuma.atividade.cadastrada': 'Nenhuma atividade cadastrada no sistema.',
+		'msg.nenhuma.atividade.cadastrada': 'Nenhuma atividade pendente para execução.',
 		'msg.execucao.atividades.iniciada': 'Execução de atividades executa.',
 		'msg.tempo.acelerado': 'Tempo acelerado em 54 minutos',
 		'msg.tempo.retardado': 'Tempo retardado em 54 minutos',

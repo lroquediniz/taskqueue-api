@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
-import br.com.sysmap.taskqueue.dto.MessageApplication;
+import br.com.sysmap.taskqueue.exception.NenhumaAtividadeException;
 import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.tipos.OperacaoTempo;
 
@@ -37,14 +37,13 @@ public class ExecucaoEndpoint {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@PermitAll
-	public Response findById() {
+	public Response inicicarProcessamento() {
 		Response resposta = null;
 		try {
 			this.service.iniciarProcessamento();
 			resposta = Response.ok().build();
-		} catch (IllegalArgumentException e) {
-			resposta = Response.status(Response.Status.NO_CONTENT).entity(new MessageApplication("msg.nenhuma.atividade.cadastrada")).build();
+		} catch (NenhumaAtividadeException e) {
+			resposta = Response.status(Response.Status.NO_CONTENT).build();
 		}
 		return resposta;
 	}
@@ -59,6 +58,18 @@ public class ExecucaoEndpoint {
 	@PermitAll
 	public List<Atividade> recuperaAtividadesPendentes() {
 		return service.recuperaListaAtividadePendentes();
+	}
+	
+	/**
+	 * Recupera lista de atividades Processadas.
+	 * @return List<{@link Atividade}> - atividades.
+	 */
+	@GET
+	@Path("/recuperaAtividadesProcessadas")
+	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
+	public List<Atividade> recuperaAtividadesProcessadas() {
+		return service.recuperaListaAtividadeProcessadas();
 	}
 	/**
 	 * Altera o tempo de processamento das atividades.

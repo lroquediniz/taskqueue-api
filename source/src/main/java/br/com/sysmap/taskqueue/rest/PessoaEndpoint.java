@@ -21,8 +21,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.Pessoa;
+import br.com.sysmap.taskqueue.model.Pessoa.ConstantePessoa;
 import br.com.sysmap.taskqueue.util.Constantes;
 
 /**
@@ -78,10 +78,8 @@ public class PessoaEndpoint {
 	@Produces("application/json")
 	public Response findById(@PathParam("id") Long id) {
 		TypedQuery<Pessoa> findByIdQuery = em
-				.createQuery(
-						"SELECT DISTINCT p FROM Pessoa p WHERE p.id = :entityId ORDER BY p.id",
-						Pessoa.class);
-		findByIdQuery.setParameter("entityId", id);
+				.createNamedQuery(ConstantePessoa.BUSCAR_PESSOA_POR_ID_KEY, Pessoa.class);
+		findByIdQuery.setParameter(ConstantePessoa.ID_FIELD, id);
 		Pessoa entity;
 		try {
 			entity = findByIdQuery.getSingleResult();
@@ -104,8 +102,7 @@ public class PessoaEndpoint {
 	@Produces("application/json")
 	public List<Pessoa> listAll(@QueryParam("start") Integer startPosition,
 			@QueryParam("max") Integer maxResult) {
-		TypedQuery<Pessoa> findAllQuery = em.createQuery(
-				"SELECT DISTINCT p FROM Pessoa p ORDER BY p.id", Pessoa.class);
+		TypedQuery<Pessoa> findAllQuery = em.createNamedQuery(ConstantePessoa.BUSCAR_TODAS_KEY, Pessoa.class);
 		if (startPosition != null) {
 			findAllQuery.setFirstResult(startPosition);
 		}
