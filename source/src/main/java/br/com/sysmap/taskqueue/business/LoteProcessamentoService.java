@@ -41,7 +41,7 @@ public class LoteProcessamentoService {
 	
 	private Atividade atividadeMaiorTempo;
 	
-	private Integer tempoAdicionado;
+	private Long alteracaoTempo = 0L;
 	
 	public void validarLoteExecucao() throws ProcessamentoException {
 		TypedQuery<Long> q = em.createNamedQuery(ConstanteLoteProcessamento.VERIFICAR_LOTE_POR_STATUS_KEY, Long.class);
@@ -105,9 +105,7 @@ public class LoteProcessamentoService {
 				minutosAtividade = new BigDecimal(atividade.getTempoExecucao().longValue() * 60);
 				
 				LocalDateTime horaAtual = LocalDateTime.now();
-				if (this.tempoAdicionado != null) {
-					horaAtual.minusMinutes(this.tempoAdicionado);
-				}
+				horaAtual.plusMinutes(this.alteracaoTempo);
 				minutosExecutados = new BigDecimal(ChronoUnit.SECONDS.between(horaInicioProcessLote, horaAtual));
 				
 				percentualExecucao = Float.valueOf((minutosExecutados.floatValue() / minutosAtividade.floatValue()) * porcentagem.floatValue()).intValue();
@@ -134,7 +132,7 @@ public class LoteProcessamentoService {
 	}
 	
 	public void atualizarTempo(OperacaoTempo operacaoTempo) {
-		this.tempoAdicionado = operacaoTempo.calcular(this.tempoAdicionado);
+		this.alteracaoTempo = operacaoTempo.calcular(this.alteracaoTempo);
 	}
 
 	private void finalizarLote() {

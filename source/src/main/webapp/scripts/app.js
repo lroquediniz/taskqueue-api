@@ -25,7 +25,7 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$window.scrollTo(0, 0);
 		}
 	 })
-	.controller('LandingPageController', function LandingPageController($scope, $location, ExecucaoResource,flash) {
+	.controller('LandingPageController', function LandingPageController($scope, $rootScope, $location, ExecucaoResource,flash) {
 		//{"qtdTarefasPendentes":0,"qtdTarefasAndamento":1,"porcentagem":0,"atualizacaoAtividades":[{"idAtividade":1,"percentualExecucao":0}]}
 		
 		$scope.init = function() {
@@ -43,6 +43,37 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 				$scope.execucao.qtdTarefasPendentes = 0;
 			};
 			ExecucaoResource.recuperaAtividadesPendentes(successCallback, errorCallback);
+		}
+		
+		
+		$scope.acelerarTempo = function() {
+			var successCallback = function(response){
+				var mensagem = {};
+				mensagem.key = 'msg.tempo.acelerado';
+				mensagem.params = [];
+				mensagem.type = 'success';
+				flash.setMessage(mensagem);
+			};
+			var errorCallback = function(response) {
+				
+			};
+			
+			ExecucaoResource.acelerarTempo(successCallback, errorCallback);
+			
+		}
+		
+		$scope.retardarTempo = function() {
+			var successCallback = function(response){
+				var mensagem = {};
+				mensagem.key = 'msg.tempo.retardado';
+				mensagem.params = [];
+				mensagem.type = 'success';
+				flash.setMessage(mensagem);
+			};
+			var errorCallback = function(response) {
+				
+			};
+			ExecucaoResource.retardarTempo(successCallback, errorCallback);
 		}
 		
 		$scope.iniciarExecucaoAtividades = function() {

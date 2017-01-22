@@ -47,8 +47,8 @@ public class ExecucaoEndpoint {
 	}
 	
 	@GET
-	@Path("/acelerarTempo/{operacao}")
-	public void acelerarTempo(@PathParam("operacao") OperacaoTempo operacao){
+	@Path("/alterarTempo/{operacao}")
+	public void alterarTempo(@PathParam("operacao") OperacaoTempo operacao){
 		service.atualizarTempo(operacao);
 	}
 

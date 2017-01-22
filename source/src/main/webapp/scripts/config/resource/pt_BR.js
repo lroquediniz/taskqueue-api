@@ -59,6 +59,9 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'msg.erro.nao.identificado': 'Ocorreu uma falha de sistema, favor contactar o administrador do sistema.',
 		'msg.nenhuma.atividade.cadastrada': 'Nenhuma atividade cadastrada no sistema.',
 		'msg.execucao.atividades.iniciada': 'Execução de atividades executa.',
+		'msg.tempo.acelerado': 'Tempo acelerado em 10 minutos',
+		'msg.tempo.retardado': 'Tempo retardado em 10 minutos',
+		
 		
 		'msg.erro.email.cadastrado': 'Email já cadastrado no sistema',
 		'msg.erro.usuario.nao.encontrado': 'Usuário não encontrado.',
