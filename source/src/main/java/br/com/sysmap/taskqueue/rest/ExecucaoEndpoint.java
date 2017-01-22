@@ -3,6 +3,7 @@ package br.com.sysmap.taskqueue.rest;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -28,6 +29,7 @@ public class ExecucaoEndpoint {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public Response findById() {
 		Response resposta = null;
 		try {
@@ -42,12 +44,14 @@ public class ExecucaoEndpoint {
 	@GET
 	@Path("/recuperaAtividadesPendentes")
 	@Produces(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public List<Atividade> recuperaAtividadesPendentes() {
 		return service.recuperaListaAtividadePendentes();
 	}
 	
 	@GET
 	@Path("/alterarTempo/{operacao}")
+	@PermitAll
 	public void alterarTempo(@PathParam("operacao") OperacaoTempo operacao){
 		service.atualizarTempo(operacao);
 	}

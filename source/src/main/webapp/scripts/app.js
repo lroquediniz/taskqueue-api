@@ -31,12 +31,16 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 		$scope.init = function() {
 			$scope.execucao = {};
 			$scope.execucao.qtdTarefasPendentes = 0;
-			$scope.execucao.qtdTarefasAndamento = 0;
+			$scope.execucao.qtdTarefasConcluidas = 0;
 			$scope.execucao.porcentagem = 0;
+			
+			
+			
 			var successCallback = function(response){
 				$scope.tarefasPendentes = response.data;
 				if($scope.tarefasPendentes) {
 					$scope.execucao.qtdTarefasPendentes = $scope.tarefasPendentes.length;
+					$scope.tarefasPendentes = $scope.tarefasPendentes.length;
 				}
 			};
 			var errorCallback = function(response) {
@@ -103,8 +107,11 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 		var dataStream = "ws://" + window.location.host + contextoWeb + "/process";
 		var taskSocket = new WebSocket(dataStream);
 		taskSocket.onmessage = function(message) {
+			var data = JSON.parse(message.data);
 			$scope.execucao = JSON.parse(message.data);
-			console.log($scope.execucao);
+			if (data.porcentagem >= 100) {
+				$scope.execucao.qtdTarefasPendentes = $scope.tarefasPendentes;
+			} 
 			$scope.$apply();	   
 		};
 		

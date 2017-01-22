@@ -4,13 +4,13 @@ public enum OperacaoTempo {
 	SOMA() {
 		@Override
 		public Long calcular(Long tempo) {
-			return tempo += 10;
+			return tempo += 54;
 		}
 	},
 	SUBTRACAO {
 		@Override
 		public Long calcular(Long tempo) {
-			return tempo -= 10;
+			return tempo -= 54;
 		}
 	};
 	

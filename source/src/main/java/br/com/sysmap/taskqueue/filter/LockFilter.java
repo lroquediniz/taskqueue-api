@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import javax.annotation.Priority;
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -13,7 +14,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import br.com.sysmap.taskqueue.annotation.ProcessMethod;
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
 import br.com.sysmap.taskqueue.exception.ProcessamentoException;
 import br.com.sysmap.taskqueue.message.MessageApplication;
@@ -56,7 +56,7 @@ public class LockFilter implements ContainerRequestFilter {
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		Method method = resourceInfo.getResourceMethod();
-		if (!method.isAnnotationPresent(ProcessMethod.class)) {
+		if (!method.isAnnotationPresent(PermitAll.class)) {
 			try {
 				this.service.validarLoteExecucao();
 			} catch (ProcessamentoException e) {

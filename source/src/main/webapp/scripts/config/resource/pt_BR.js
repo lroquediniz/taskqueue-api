@@ -20,6 +20,7 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'label.descricao': 'Descrição',
 		'label.esforco': 'Esforço',
 		'label.pessoa': 'Pessoa',
+		'label.porcentagem.conclusao': '% Concluido',
 		
 		
 		'option.selecione': 'Selecione',
@@ -35,8 +36,8 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'bt.close.modal': 'x',
 		'bt.editar': 'Editar',
 		'bt.iniciar': 'Iniciar',
-		'bt.mais.minutos': '+ 00:10',
-		'bt.menos.minutos': '- 00:10',
+		'bt.mais.minutos': '+ 00:54',
+		'bt.menos.minutos': '- 00:54',
 		
 		
 		'menu.processamento': 'Processamento',
@@ -59,8 +60,9 @@ angular.module('taskqueue-api').config(['$translateProvider', function ($transla
 		'msg.erro.nao.identificado': 'Ocorreu uma falha de sistema, favor contactar o administrador do sistema.',
 		'msg.nenhuma.atividade.cadastrada': 'Nenhuma atividade cadastrada no sistema.',
 		'msg.execucao.atividades.iniciada': 'Execução de atividades executa.',
-		'msg.tempo.acelerado': 'Tempo acelerado em 10 minutos',
-		'msg.tempo.retardado': 'Tempo retardado em 10 minutos',
+		'msg.tempo.acelerado': 'Tempo acelerado em 54 minutos',
+		'msg.tempo.retardado': 'Tempo retardado em 54 minutos',
+		'msg.lotes.em.processamento': 'Não é possível acessar a funcionalidade, existem atividades em processamento.',
 		
 		
 		'msg.erro.email.cadastrado': 'Email já cadastrado no sistema',
