@@ -4,7 +4,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.ApplicationPath;
 /**
  * Path para services REST da aplicação.
- * @author luan
+ * @author Luan Roque.
  *
  */
 @ApplicationPath("/rest")

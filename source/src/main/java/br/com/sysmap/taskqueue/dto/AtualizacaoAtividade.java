@@ -18,7 +18,7 @@ public class AtualizacaoAtividade {
 	private Integer percentualExecucao;
 	
 	/*
-	 * Getters and Setters
+	 * Getters and Setters.
 	 */
 
 	public String getDescricao() {

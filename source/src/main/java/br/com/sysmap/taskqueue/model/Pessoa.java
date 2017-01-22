@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Classe de mapeamento objeto relacional Pessoa.
  * 
- * @author Luan Roque
+ * @author Luan Roque.
  */
 @NamedQueries({ 
 	@NamedQuery(name = Pessoa.ConstantePessoa.BUSCAR_TODAS_KEY, query = Pessoa.ConstantePessoa.BUSCAR_TODAS_QUERY),

@@ -28,6 +28,7 @@ import br.com.sysmap.taskqueue.util.Constantes;
 /**
  * Endpoind EJB Pessoa.
  * Endpoint inteligente para servico de cadastro de atividades.
+ * @author Luan Roque.
  */
 @Stateless
 @Path("/pessoas")

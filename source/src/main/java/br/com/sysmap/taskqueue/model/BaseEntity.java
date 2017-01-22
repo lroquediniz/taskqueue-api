@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Classe de entidade base de mapeamento objeto relacional.
- * @author Luan Roque
+ * @author Luan Roque.
  *
  * @param <ID>
  */

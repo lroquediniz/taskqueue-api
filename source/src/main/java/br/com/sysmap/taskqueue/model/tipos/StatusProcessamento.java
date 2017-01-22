@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 /**
  * Enum de status de processamento.
- * @author luan
+ * @author Luan Roque.
  *
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
@@ -35,7 +35,11 @@ public enum StatusProcessamento {
 	public String getType() {
 		return this.toString();
 	}
-
+	/**
+	 * Método que transforma um objeto JSON em Enumeration java.
+	 * @param node
+	 * @return
+	 */
 	@JsonCreator
 	public static StatusProcessamento fromObject(JsonNode node) {
 		String type = null;

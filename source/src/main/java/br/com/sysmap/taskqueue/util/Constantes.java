@@ -11,7 +11,7 @@ package br.com.sysmap.taskqueue.util;
 /**
  * Interface de costantes do sistema.
  * Constantes como interface garantindo unicidade dos dados.
- * @author luan
+ * @author Luan Roque.
  *
  */
 public interface Constantes {

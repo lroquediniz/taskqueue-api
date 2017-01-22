@@ -19,7 +19,7 @@ import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 /**
  * Classe de entidade de mapeamento objeto relacional.
  * 
- * @author Luan Roque
+ * @author Luan Roque.
  *
  * @param <ID>
  */
@@ -57,9 +57,10 @@ public class LoteProcessamento extends BaseEntity<Long> {
 	@Enumerated(EnumType.ORDINAL)
 	private StatusProcessamento status;
 
-	/**
-	 * @return the atividades
+	/*
+	 * Getters and Setters.
 	 */
+	
 	public List<Atividade> getAtividades() {
 		return atividades;
 	}

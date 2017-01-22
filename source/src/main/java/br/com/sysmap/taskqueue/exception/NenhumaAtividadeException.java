@@ -3,7 +3,7 @@ package br.com.sysmap.taskqueue.exception;
 /**
  * Exceção Customizada para indicar processamento ativos no sistema.
  * 
- * @author luan
+ * @author Luan Roque.
  *
  */
 public class NenhumaAtividadeException extends Exception {

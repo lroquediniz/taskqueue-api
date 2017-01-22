@@ -21,7 +21,7 @@ import br.com.sysmap.taskqueue.exception.ProcessamentoException;
 /**
  * Filtro para requisicoes REST.
  * Valicao de processamento de lotes.
- * @author Luan Roque
+ * @author Luan Roque.
  */
 @Provider
 @Priority(Priorities.AUTHENTICATION)

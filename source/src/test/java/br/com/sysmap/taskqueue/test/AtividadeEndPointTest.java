@@ -8,7 +8,11 @@ import org.junit.Test;
 import br.com.sysmap.taskqueue.model.Atividade;
 import br.com.sysmap.taskqueue.model.Pessoa;
 import br.com.sysmap.taskqueue.rest.AtividadeEndpoint;
-
+/**
+ * Teste Junit em Enpoint Atividade.
+ * @author Luan Roque.
+ *
+ */
 public class AtividadeEndPointTest {
 
 	private AtividadeEndpoint endpoint;

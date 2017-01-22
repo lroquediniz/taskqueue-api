@@ -18,7 +18,7 @@ public class MessageApplication {
 
 	
 	/*
-	 * Construtores
+	 * Construtores.
 	 */
 	
 	public MessageApplication(String message) {
@@ -27,7 +27,7 @@ public class MessageApplication {
 	}
 
 	/*
-	 * Getters and Setters
+	 * Getters and Setters.
 	 */
 	public String getMessage() {
 		return this.message;

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import br.com.sysmap.taskqueue.model.tipos.StatusProcessamento;
 /**
  * Classe de entidade de mapeamento objeto relacional.
- * @author Luan Roque
+ * @author Luan Roque.
  *
  * @param <ID>
  */

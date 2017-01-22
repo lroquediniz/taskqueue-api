@@ -17,10 +17,9 @@ import com.google.gson.GsonBuilder;
 
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
 import br.com.sysmap.taskqueue.dto.Execucao;
-import br.com.sysmap.taskqueue.util.Constantes;
 /**
  * Web Socket para monitoramento de atividades em processamento.
- * @author luan
+ * @author Luan Roque.
  *
  */
 @ServerEndpoint("/process")
