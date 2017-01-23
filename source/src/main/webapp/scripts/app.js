@@ -34,6 +34,8 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 		$scope.exibeAtividadesPendentes = false;
 		$scope.exibeAtividadesConcluidas = false;
 		
+		$scope.qtdTarefasPendentes = 0;
+		
 		
 		$scope.pesquisarAtividadesPendentes = function () {
 			$scope.exibeAtividadesConcluidas = false;
@@ -51,11 +53,10 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$scope.exibeAtividadesConcluidas = !$scope.exibeAtividadesConcluidas;
 			if($scope.exibeAtividadesConcluidas){
 				var successCallback = function(response){
-					$scope.atividadesSearch =  response.data;
+					$scope.atividadesSearch = response.data;
 				};
 				ExecucaoResource.recuperaAtividadesProcessadas(successCallback, $rootScope.defaultErrorCallback);
 			}
-
 		}
 
 		
@@ -107,12 +108,13 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			var dataStream = "ws://" + window.location.host + contextoWeb + "/process";
 			$scope.taskSocket = new WebSocket(dataStream);
 			$scope.taskSocket.onmessage = function(message) {
-				var data = JSON.parse(message.data);
-				if(data.porcentagem <= 100){
+				if (message.data != 'msg.waiting.execution') {
+					var data = JSON.parse(message.data);
 					$scope.execucao = JSON.parse(message.data);
+					$scope.qtdTarefasPendentes = $scope.qtdTarefasPendentes
 					$scope.processando = data.porcentagem < 100;
 					$scope.$apply();	   
-				}
+				} 
 			};
 			$scope.taskSocket.onclose = function(evt) {
 				$scope.processando = false;
@@ -123,25 +125,23 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 		$scope.iniciarExecucaoAtividades = function() {
 			$scope.processando = true;
 			var successCallback = function(response){
-				if(response.status == 204){
-					$scope.init();
+				if(response.status != 204){
+					var mensagem = {};
+					mensagem.key = 'msg.execucao.atividades.iniciada';
+					mensagem.params = [];
+					mensagem.type = 'success';
+					flash.setMessage(mensagem);
+					$route.reload();
+				}else{
 					var mensagem = {};
 					mensagem.key = 'msg.nenhuma.atividade.cadastrada';
 					mensagem.params = [];
 					mensagem.type = 'error';
 					flash.setMessage(mensagem);
 					$scope.init()
-				}else{
-					var mensagem = {};
-					mensagem.key = 'msg.execucao.atividades.iniciada';
-					mensagem.params = [];
-					mensagem.type = 'success';
-					flash.setMessage(mensagem);
 				}
-				
 			};
 			ExecucaoResource.iniciarExecucao(successCallback,$rootScope.defaultErrorCallback);
-			
 		}
 		
 		$scope.connectWebSocket();

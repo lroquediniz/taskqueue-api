@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
 import br.com.sysmap.taskqueue.dto.Execucao;
+import br.com.sysmap.taskqueue.util.Constantes;
 /**
  * Web Socket para monitoramento de atividades em processamento.
  * @author Luan Roque.
@@ -50,13 +51,27 @@ public class ProcessWebSocket {
 	 */
 	private void enviarAtualizacoesProcessamentoParaClientes(Session session) {
 		Execucao execucao = this.service.getExecucao();
+		String execucaoStr = null;
+		sessoes = session.getOpenSessions();
 		if (execucao != null) {
 			Gson gson = new GsonBuilder().create();
-			String execucaoStr = gson.toJson(execucao);
-			sessoes = session.getOpenSessions();
+			execucaoStr = gson.toJson(execucao);
 			for (Session sess : sessoes) {
 				try {
 					sess.getBasicRemote().sendText(execucaoStr);
+					if(execucao.getPorcentagem().equals(Constantes.Params.BASE_PORCENTAGEM)){
+						this.service.setExecucao(null);
+					}
+				} catch (IOException ioe) {
+					System.out.println(ioe.getMessage());
+				}
+			}
+		}else{
+			for (Session sess : sessoes) {
+			execucaoStr = Constantes.Message.MSG_WAITING_EXECUTION;
+				try {
+					sess.getBasicRemote().sendText(execucaoStr);
+					
 				} catch (IOException ioe) {
 					System.out.println(ioe.getMessage());
 				}

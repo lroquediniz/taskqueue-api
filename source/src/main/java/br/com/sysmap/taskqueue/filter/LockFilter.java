@@ -17,6 +17,7 @@ import javax.ws.rs.ext.Provider;
 import br.com.sysmap.taskqueue.business.LoteProcessamentoService;
 import br.com.sysmap.taskqueue.dto.MessageApplication;
 import br.com.sysmap.taskqueue.exception.ProcessamentoException;
+import br.com.sysmap.taskqueue.util.Constantes;
 
 /**
  * Filtro para requisicoes REST.
@@ -48,7 +49,7 @@ public class LockFilter implements ContainerRequestFilter {
 	 * Inicializador de atributos estaticos.
 	 */
 	static {
-		CONFLICT = Response.status(Response.Status.CONFLICT).entity(new MessageApplication("msg.lotes.em.processamento")).build();
+		CONFLICT = Response.status(Response.Status.CONFLICT).entity(new MessageApplication(Constantes.Message.MSG_LOTES_EM_PROCESSAMENTO)).build();
 	}
 	/**
 	 * Metodo de filtragem de requisições validando processamento de lotes em execução,

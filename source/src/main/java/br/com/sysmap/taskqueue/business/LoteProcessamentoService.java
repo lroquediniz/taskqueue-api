@@ -145,13 +145,15 @@ public class LoteProcessamentoService {
 	 */
 	@Schedule(hour = "*", minute = "*", second = "*/1")
 	public void timeOut() {
-		if (this.lote != null && this.lote.getStatus().equals(StatusProcessamento.EM_EXECUCAO)) {
-			processaLote(this.lote, this.execucao, this.atividadeMaiorTempo, this.alteracaoTempo);
-			if (this.execucao.getPorcentagem() >= Constantes.Params.BASE_PORCENTAGEM) {
-				this.execucao.setPorcentagem(Constantes.Params.BASE_PORCENTAGEM);
-				this.finalizarLoteExecucao();
-			}else{
-				this.atualizarLoteExecucao();
+		if(this.execucao != null){
+			if (this.lote != null && this.lote.getStatus().equals(StatusProcessamento.EM_EXECUCAO)) {
+				processaLote(this.lote, this.execucao, this.atividadeMaiorTempo, this.alteracaoTempo);
+				if (this.execucao.getPorcentagem() >= Constantes.Params.BASE_PORCENTAGEM) {
+					this.execucao.setPorcentagem(Constantes.Params.BASE_PORCENTAGEM);
+					this.finalizarLoteExecucao();
+				}else{
+					this.atualizarLoteExecucao();
+				}
 			}
 		}
 	}
@@ -245,5 +247,15 @@ public class LoteProcessamentoService {
 	public Execucao getExecucao() {
 		return this.execucao;
 	}
+
+	/**
+	 * Altera o valor da execucao.
+	 * @param execucao
+	 */
+	public void setExecucao(Execucao execucao) {
+		this.execucao = execucao;
+	}
+	
+	
 
 }

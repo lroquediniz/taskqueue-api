@@ -34,5 +34,11 @@ public interface Constantes {
 		
 		
 	}
+	
+	public interface Message {
+		String MSG_WAITING_EXECUTION = "msg.waiting.execution";
+		
+		String MSG_LOTES_EM_PROCESSAMENTO = "msg.lotes.em.processamento";
+	}
 
 }
