@@ -3,7 +3,6 @@ package br.com.sysmap.taskqueue.rest;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -128,7 +127,6 @@ public class AtividadeEndpoint {
 	 */
 	@GET
 	@Produces("application/json")
-	@PermitAll
 	public List<Atividade> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
 		TypedQuery<Atividade> findAllQuery = em.createNamedQuery(ConstanteAtividade.BUSCAR_TODOS_KEY, Atividade.class);
 		if (startPosition != null) {
