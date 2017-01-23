@@ -5,6 +5,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 /**
  * Classe de mapeamento objeto relacional Pessoa.
  * 

@@ -3,6 +3,7 @@ package br.com.sysmap.taskqueue.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -35,7 +36,7 @@ public class LoteProcessamento extends BaseEntity<Long> {
 	/**
 	 * Atividades
 	 */
-	@OneToMany(mappedBy = "loteProcessamento")
+	@OneToMany(mappedBy = "loteProcessamento", cascade=CascadeType.ALL)
 	@JsonManagedReference(value = "atividades")
 	private List<Atividade> atividades;
 

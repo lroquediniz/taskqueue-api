@@ -13,7 +13,7 @@ import br.com.sysmap.taskqueue.rest.AtividadeEndpoint;
  * @author Luan Roque.
  *
  */
-public class AtividadeEndPointTest {
+public class CalculoTempoExecucaoTest {
 
 	private AtividadeEndpoint endpoint;
 
@@ -31,26 +31,28 @@ public class AtividadeEndPointTest {
 	public void testeCalculoTempoExecucao() {
 
 		Atividade atividade = new Atividade();
+
 		atividade.setPessoa(new Pessoa());
-		atividade.getPessoa().setProdutividade(10);
+		
 		atividade.setEsforco(1);
-		
-		
+		atividade.getPessoa().setProdutividade(10);
 		this.endpoint.calcularTempoExecucao(atividade);
 		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(54));
 		
-		atividade.getPessoa().setProdutividade(20);
+		atividade.getPessoa().setProdutividade(29);
+		atividade.setEsforco(50);
 		this.endpoint.calcularTempoExecucao(atividade);
-		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(48));
+		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(2130));
 		
-		atividade.getPessoa().setProdutividade(30);
+		atividade.getPessoa().setProdutividade(25);
+		atividade.setEsforco(60);
 		this.endpoint.calcularTempoExecucao(atividade);
-		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(42));
+		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(2700));
 		
-		atividade.setEsforco(100);
-		atividade.getPessoa().setProdutividade(30);
+		atividade.getPessoa().setProdutividade(25);
+		atividade.setEsforco(30);
 		this.endpoint.calcularTempoExecucao(atividade);
-		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(4200));
-		
+		Assert.assertEquals(atividade.getTempoExecucao(), Integer.valueOf(1350));
+
 	}
 }

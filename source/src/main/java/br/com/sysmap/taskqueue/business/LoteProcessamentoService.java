@@ -115,15 +115,15 @@ public class LoteProcessamentoService {
 	private LoteProcessamento criarLoteProcessamento() throws NenhumaAtividadeException {
 		LoteProcessamento lote = new LoteProcessamento();
 		this.alteracaoTempo = 0L;
-		lote.setDataInicio(new Date());
+		this.lote.setDataInicio(new Date());
 		List<Atividade> listaAtividades = this.recuperaListaAtividadePendentes();
 		if (listaAtividades.isEmpty()) {
 			throw new NenhumaAtividadeException();
 		}
 		LOGGER.log(Level.INFO, "Inicio de processamento de Lote de Atividades");
 		this.atividadeMaiorTempo = recuperarAtividadeMaiorTempo(listaAtividades);
-		lote.setAtividades(listaAtividades);
-		lote.setStatus(StatusProcessamento.EM_EXECUCAO);
+		this.lote.setAtividades(listaAtividades);
+		this.lote.setStatus(StatusProcessamento.EM_EXECUCAO);
 		return lote;
 	}
 	
@@ -163,6 +163,7 @@ public class LoteProcessamentoService {
 		if (this.lote != null && this.lote.getStatus().equals(StatusProcessamento.EM_EXECUCAO)) {
 			processaLote(this.lote, this.execucao, this.atividadeMaiorTempo, this.alteracaoTempo);
 			if (this.execucao.getPorcentagem() >= Constantes.Params.BASE_PORCENTAGEM) {
+				this.execucao.setPorcentagem(Constantes.Params.BASE_PORCENTAGEM);
 				this.finalizarLoteExecucao();
 			}else{
 				this.atualizarLoteExecucao();
@@ -182,7 +183,7 @@ public class LoteProcessamentoService {
 		if (atividadeMaiorTempo == null) {
 			atividadeMaiorTempo = recuperarAtividadeMaiorTempo(lote.getAtividades());
 		}
-		LocalDateTime horaInicioProcessLote = LocalDateTime.ofInstant(this.lote.getDataInicio().toInstant(),
+		LocalDateTime horaInicioProcessLote = LocalDateTime.ofInstant(lote.getDataInicio().toInstant(),
 				ZoneId.systemDefault());
 		List<Atividade> atividades = lote.getAtividades();
 		execucao.setPorcentagem(0);
@@ -242,6 +243,7 @@ public class LoteProcessamentoService {
 	 */
 	private void finalizarLoteExecucao() {
 		this.lote.setStatus(StatusProcessamento.CONCLUIDO);
+		this.lote.setDataConclusao(new Date());
 		atualizarLoteExecucao();
 		LOGGER.log(Level.INFO, "Lote processado com sucesso.");
 	}

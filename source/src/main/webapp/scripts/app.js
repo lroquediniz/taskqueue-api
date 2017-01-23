@@ -110,9 +110,11 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$scope.taskSocket = new WebSocket(dataStream);
 			$scope.taskSocket.onmessage = function(message) {
 				var data = JSON.parse(message.data);
-				$scope.execucao = JSON.parse(message.data);
-				$scope.processando = data.porcentagem < 100;
-				$scope.$apply();	   
+				if(data.porcentagem < 100){
+					$scope.execucao = JSON.parse(message.data);
+					$scope.processando = data.porcentagem < 100;
+					$scope.$apply();	   
+				}
 			};
 			$scope.taskSocket.onclose = function(evt) {
 				$scope.processando = false;

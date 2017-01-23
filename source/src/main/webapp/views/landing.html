@@ -95,7 +95,6 @@
 				{{tasks}}
 				<button id="play" class="btn btn-btn btn-primary" ng-click="iniciarExecucaoAtividades()" ng-disabled="processando" ><i class="fa fa-youtube-play"></i>&nbsp;<texto translate="bt.iniciar"></texto></button>
 				<button id="acelerar" class="btn btn-info" ng-click="acelerarTempo()" ng-disabled="!processando" ><i class="fa fa-clock-o"></i>&nbsp;<texto translate="bt.mais.minutos" ></texto></button>
-				<button id="retardar" class="btn btn-danger" ng-click="retardarTempo()" ng-disabled="!processando" ><i class="fa fa-clock-o"></i>&nbsp;<texto translate="bt.menos.minutos"></texto></button>
 			</div>
 			<div class="form-group" ng-repeat="atualizacao in execucao.atualizacaoAtividades">
 				<div class="sub-title" ng-bind="atualizacao.descricao"></div>
