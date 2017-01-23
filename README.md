@@ -6,9 +6,9 @@ Este projeto provê um serviço de processamento de fila de atividades.
 
 ## Tecnologias
 
-- **[<code>GET</code> [Java EE 7](https://docs.oracle.com/javaee/7/tutorial/"Java EE 7")]
-- **[<code>GET</code> [Angular JS](https://angularjs.org/"Angular JS")]
-- **[<code>GET</code> [Wildfly 10.1.0.Final](http://wildfly.org/ "Wildfly 10.1.0.Final")]
+- [Java EE 7](https://docs.oracle.com/javaee/7/tutorial/"Java EE 7")]
+- [Angular JS](https://angularjs.org/"Angular JS")]
+- [Wildfly 10.1.0.Final](http://wildfly.org/ "Wildfly 10.1.0.Final")]
 
 
 ## FAQ
@@ -16,7 +16,7 @@ Este projeto provê um serviço de processamento de fila de atividades.
 
 - Instale o [Docker](https://docs.docker.com/engine/getstarted/ "Docker").
 
-- Execute o arquiro  o aquivo [run.sh].
+- Execute o arquiro  o aquivo <code>run.sh</code>.
 
 ```shell
 ./run.sh
