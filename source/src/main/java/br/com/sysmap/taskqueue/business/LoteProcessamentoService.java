@@ -98,13 +98,13 @@ public class LoteProcessamentoService {
 	 * @throws NenhumaAtividadeException
 	 */
 	private LoteProcessamento criarLoteProcessamento() throws NenhumaAtividadeException {
-		this.lote = new LoteProcessamento();
-		this.alteracaoTempo = 0L;
-		this.lote.setDataInicio(new Date());
 		List<Atividade> listaAtividades = this.recuperaListaAtividadePendentes();
 		if (listaAtividades.isEmpty()) {
 			throw new NenhumaAtividadeException();
 		}
+		this.lote = new LoteProcessamento();
+		this.alteracaoTempo = 0L;
+		this.lote.setDataInicio(new Date());
 		LOGGER.log(Level.INFO, "Inicio de processamento de Lote de Atividades");
 		this.atividadeMaiorTempo = recuperarAtividadeMaiorTempo(listaAtividades);
 		this.lote.setAtividades(listaAtividades);

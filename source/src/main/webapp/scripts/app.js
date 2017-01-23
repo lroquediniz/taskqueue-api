@@ -25,7 +25,7 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$window.scrollTo(0, 0);
 		}
 	 })
-	.controller('LandingPageController', function LandingPageController($scope, $rootScope, $location, ExecucaoResource,flash) {
+	.controller('LandingPageController', function LandingPageController($scope, $route, $rootScope, $location, ExecucaoResource,flash) {
 		//{"qtdTarefasPendentes":0,"qtdTarefasAndamento":1,"porcentagem":0,"atualizacaoAtividades":[{"idAtividade":1,"percentualExecucao":0}]}
 		
 		$scope.processando = false;
@@ -81,11 +81,7 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 		
 		$scope.acelerarTempo = function() {
 			var successCallback = function(response){
-				var mensagem = {};
-				mensagem.key = 'msg.tempo.acelerado';
-				mensagem.params = [];
-				mensagem.type = 'success';
-				flash.setMessage(mensagem);
+				console.log('msg.tempo.acelerado');
 			};
 			ExecucaoResource.acelerarTempo(successCallback, $rootScope.defaultErrorCallback);
 			
@@ -126,11 +122,6 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$scope.processando = true;
 			var successCallback = function(response){
 				if(response.status != 204){
-					var mensagem = {};
-					mensagem.key = 'msg.execucao.atividades.iniciada';
-					mensagem.params = [];
-					mensagem.type = 'success';
-					flash.setMessage(mensagem);
 					$route.reload();
 				}else{
 					var mensagem = {};

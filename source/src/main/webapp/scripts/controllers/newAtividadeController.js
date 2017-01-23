@@ -16,15 +16,20 @@ angular.module('taskqueue-api').controller('NewAtividadeController', function ($
 	$scope.save = function() {
 		var successCallback = function(data,responseHeaders){
 			var id = locationParser(responseHeaders);
-			flash.setMessage({'type':'success','text':'The atividade was created successfully.'});
+			var id = locationParser(responseHeaders);
+			var mensagem = {};
+			mensagem.key = 'msg.registro.salvo.sucesso';
+			mensagem.params = [];
+			mensagem.type = 'success';
+			$timeout(function() {flash.setMessage(mensagem);}, 0);
 			$location.path('/Atividades');
 		};
 		var errorCallback = function(response) {
-			if(response && response.data) {
-				flash.setMessage({'type': 'error', 'text': response.data.message || response.data}, true);
-			} else {
-				flash.setMessage({'type': 'error', 'text': 'Something broke. Retry, or cancel and start afresh.'}, true);
-			}
+			mensagem = {};
+			mensagem.key = 'msg.erro.nao.identificado';
+			mensagem.params = [];
+			mensagem.type = 'error';
+			flash.setMessage(mensagem);
 		};
 		AtividadeResource.save($scope.atividade, successCallback, errorCallback);
 	};
