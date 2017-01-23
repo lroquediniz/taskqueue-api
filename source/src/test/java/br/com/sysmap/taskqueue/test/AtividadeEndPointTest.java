@@ -29,7 +29,7 @@ public class AtividadeEndPointTest {
 
 	@Test
 	public void testeCalculoTempoExecucao() {
-		
+
 		Atividade atividade = new Atividade();
 		atividade.setPessoa(new Pessoa());
 		atividade.getPessoa().setProdutividade(10);
