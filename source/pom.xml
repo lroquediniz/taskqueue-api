@@ -62,8 +62,6 @@
 		<!-- WildFly Application Server -->
 		<wildfly.maven.plugin>1.1.0.Alpha1</wildfly.maven.plugin>
 		<wildfly.server.version>10.1.0.Final</wildfly.server.version>
-		<wildfly.singleton.service>1.2.1</wildfly.singleton.service>
-		<jboss.weld.servlet>2.2.9.Final</jboss.weld.servlet>
 
 		<wildfly.arquillian.container.embedded>2.0.0.Final</wildfly.arquillian.container.embedded>
 
@@ -175,21 +173,6 @@
 	</dependencyManagement>
 	<dependencies>
 	
-	    <!-- Container dependencies -->
-		<dependency>
-			<groupId>com.bertoncelj.wildflysingletonservice</groupId>
-			<artifactId>wildfly-singleton-service</artifactId>
-			<version>${wildfly.singleton.service}</version>
-			<scope>provided</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.jboss.weld.servlet</groupId>
-		    <artifactId>weld-servlet</artifactId>
-		    <version>${jboss.weld.servlet}</version>
-		    <scope>provided</scope>
-		</dependency>
-
 		<!-- Persistence dependencies -->
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>

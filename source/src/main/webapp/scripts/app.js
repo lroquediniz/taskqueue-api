@@ -101,8 +101,6 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			ExecucaoResource.retardarTempo(successCallback, $rootScope.defaultErrorCallback);
 		}
 		
-		
-		
 		$scope.connectWebSocket = function() {
 			var path = window.location.pathname; 
 			var contextoWeb = path.substring(0, path.indexOf('/', 1)); 
@@ -110,7 +108,7 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			$scope.taskSocket = new WebSocket(dataStream);
 			$scope.taskSocket.onmessage = function(message) {
 				var data = JSON.parse(message.data);
-				if(data.porcentagem < 100){
+				if(data.porcentagem <= 100){
 					$scope.execucao = JSON.parse(message.data);
 					$scope.processando = data.porcentagem < 100;
 					$scope.$apply();	   

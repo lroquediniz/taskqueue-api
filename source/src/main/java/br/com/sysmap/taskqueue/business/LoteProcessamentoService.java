@@ -13,12 +13,11 @@ import java.util.logging.Logger;
 
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.bertoncelj.wildflysingletonservice.Start;
-import com.bertoncelj.wildflysingletonservice.Stop;
 
 import br.com.sysmap.taskqueue.dto.AtualizacaoAtividade;
 import br.com.sysmap.taskqueue.dto.Execucao;
@@ -37,6 +36,7 @@ import br.com.sysmap.taskqueue.util.Constantes;
  * @author Luan Roque
  */
 @Singleton
+@Startup
 public class LoteProcessamentoService {
 
 	/**
@@ -70,21 +70,6 @@ public class LoteProcessamentoService {
 	 */
 	private final static Logger LOGGER = Logger.getLogger(LoteProcessamentoService.class.getName());
 
-	/**
-	 * Metodo de inicialização do servico com anotação @Start para apenas um nó em caso de cluster.
-	 */
-	@Start
-	public void start() {
-		LOGGER.info("Servico de processamento de lote de ativadades iniciado..");
-	}
-
-	/**
-	 * Metodo de interrupção do servico com anotação @Stop para  apenas um nó em caso de cluster.
-	 */
-	@Stop
-	public void stop() {
-		LOGGER.info("Schedule processamento de lote de atividade interrompido.");
-	}
 	
 	/**
 	 * Valida existencia de lote em execução.
@@ -113,7 +98,7 @@ public class LoteProcessamentoService {
 	 * @throws NenhumaAtividadeException
 	 */
 	private LoteProcessamento criarLoteProcessamento() throws NenhumaAtividadeException {
-		LoteProcessamento lote = new LoteProcessamento();
+		this.lote = new LoteProcessamento();
 		this.alteracaoTempo = 0L;
 		this.lote.setDataInicio(new Date());
 		List<Atividade> listaAtividades = this.recuperaListaAtividadePendentes();
