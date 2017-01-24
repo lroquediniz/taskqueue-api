@@ -122,8 +122,7 @@ public class LoteProcessamentoService {
 	 * @return List<{@link Atividade}>
 	 */
 	public List<Atividade> recuperaListaAtividadePendentes() {
-		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY,
-				Atividade.class);
+		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY,Atividade.class);
 		q.setParameter(ConstanteLoteProcessamento.STATUS_FIELD, StatusProcessamento.PENDENTE);
 		return q.getResultList();
 	}
@@ -133,25 +132,25 @@ public class LoteProcessamentoService {
 	 * @return List<{@link Atividade}>
 	 */
 	public List<Atividade> recuperaListaAtividadeProcessadas() {
-		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY,
-				Atividade.class);
+		TypedQuery<Atividade> q = em.createNamedQuery(ConstanteAtividade.BUSCAR_ATIVIDADES_POR_STATUS_KEY, Atividade.class);
 		q.setParameter(ConstanteLoteProcessamento.STATUS_FIELD, StatusProcessamento.CONCLUIDO);
 		return q.getResultList();
 	}
 	
 
 	/**
-	 *	Metodo de schedule de tempo de execução de 1 segundo para processamento de atividades em lote. 	
+	 * Metodo de schedule de tempo de execução de 1 segundo para processamento
+	 * de atividades em lote.
 	 */
 	@Schedule(hour = "*", minute = "*", second = "*/1")
 	public void timeOut() {
-		if(this.execucao != null){
+		if (this.execucao != null) {
 			if (this.lote != null && this.lote.getStatus().equals(StatusProcessamento.EM_EXECUCAO)) {
 				processaLote(this.lote, this.execucao, this.atividadeMaiorTempo, this.alteracaoTempo);
 				if (this.execucao.getPorcentagem() >= Constantes.Params.BASE_PORCENTAGEM) {
 					this.execucao.setPorcentagem(Constantes.Params.BASE_PORCENTAGEM);
 					this.finalizarLoteExecucao();
-				}else{
+				} else {
 					this.atualizarLoteExecucao();
 				}
 			}
@@ -170,8 +169,7 @@ public class LoteProcessamentoService {
 		if (atividadeMaiorTempo == null) {
 			atividadeMaiorTempo = recuperarAtividadeMaiorTempo(lote.getAtividades());
 		}
-		LocalDateTime horaInicioProcessLote = LocalDateTime.ofInstant(lote.getDataInicio().toInstant(),
-				ZoneId.systemDefault());
+		LocalDateTime horaInicioProcessLote = LocalDateTime.ofInstant(lote.getDataInicio().toInstant(), ZoneId.systemDefault());
 		List<Atividade> atividades = lote.getAtividades();
 		execucao.setPorcentagem(0);
 		execucao.setQtdTarefasConcluidas(0);
@@ -256,6 +254,4 @@ public class LoteProcessamentoService {
 		this.execucao = execucao;
 	}
 	
-	
-
 }

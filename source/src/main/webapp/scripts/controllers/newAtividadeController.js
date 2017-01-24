@@ -1,21 +1,13 @@
 
-angular.module('taskqueue-api').controller('NewAtividadeController', function ($scope, $location, locationParser, flash, AtividadeResource , PessoaResource) {
+angular.module('taskqueue-api').controller('NewAtividadeController', function ($scope,$timeout , $location, locationParser, flash, AtividadeResource , PessoaResource) {
 	$scope.disabled = false;
 	$scope.$location = $location;
 	$scope.atividade = $scope.atividade || {};
 	$scope.atividade.pessoa = {};
 	$scope.pessoaList = PessoaResource.queryAll();
-	
-	$scope.statusList = [
-		"PENDENTE",
-		"EM_ANDAMENTO",
-		"CONCLUIDO"
-	];
-	
 
 	$scope.save = function() {
 		var successCallback = function(data,responseHeaders){
-			var id = locationParser(responseHeaders);
 			var id = locationParser(responseHeaders);
 			var mensagem = {};
 			mensagem.key = 'msg.registro.salvo.sucesso';

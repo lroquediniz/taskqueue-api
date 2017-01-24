@@ -98,25 +98,7 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			ExecucaoResource.retardarTempo(successCallback, $rootScope.defaultErrorCallback);
 		}
 		
-		$scope.connectWebSocket = function() {
-			var path = window.location.pathname; 
-			var contextoWeb = path.substring(0, path.indexOf('/', 1)); 
-			var dataStream = "ws://" + window.location.host + contextoWeb + "/process";
-			$scope.taskSocket = new WebSocket(dataStream);
-			$scope.taskSocket.onmessage = function(message) {
-				if (message.data != 'msg.waiting.execution') {
-					var data = JSON.parse(message.data);
-					$scope.execucao = JSON.parse(message.data);
-					$scope.qtdTarefasPendentes = $scope.qtdTarefasPendentes
-					$scope.processando = data.porcentagem < 100;
-					$scope.$apply();	   
-				} 
-			};
-			$scope.taskSocket.onclose = function(evt) {
-				$scope.processando = false;
-				$scope.recuperaTaferasPendentes();
-			};
-		}
+		
 		
 		$scope.iniciarExecucaoAtividades = function() {
 			$scope.processando = true;
@@ -135,7 +117,24 @@ angular.module('taskqueue-api',['ngRoute', 'ngResource', 'ui.mask', 'ngCookies',
 			ExecucaoResource.iniciarExecucao(successCallback,$rootScope.defaultErrorCallback);
 		}
 		
-		$scope.connectWebSocket();
+		
+		var path = window.location.pathname; 
+		var contextoWeb = path.substring(0, path.indexOf('/', 1)); 
+		var dataStream = "ws://" + window.location.host + contextoWeb + "/process";
+		$scope.taskSocket = new WebSocket(dataStream);
+		$scope.taskSocket.onmessage = function(message) {
+			if (message.data != 'msg.waiting.execution') {
+				var data = JSON.parse(message.data);
+				$scope.execucao = JSON.parse(message.data);
+				$scope.processando = $scope.execucao.porcentagem < 100;
+				$scope.$apply();
+			} 
+		};
+		$scope.taskSocket.onclose = function(evt) {
+			$scope.processando = false;
+			$scope.recuperaTaferasPendentes();
+		};
+		
 		$scope.init();
 		
 	})

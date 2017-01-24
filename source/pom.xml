@@ -349,49 +349,6 @@
 					<contextRoot>/</contextRoot>
 				</configuration>
 			</plugin>
-			<!-- You need the maven dependency plugin to download locally a zip with 
-				the server, unless you provide your own, it will download under the /target 
-				directory -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${maven.dependency.plugin}</version>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>process-test-classes</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.wildfly</groupId>
-									<artifactId>wildfly-dist</artifactId>
-									<version>${wildfly.server.version}</version>
-									<type>zip</type>
-									<overWrite>false</overWrite>
-									<outputDirectory>target</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven.surefire.plugin}</version>
-				<configuration>
-					<systemPropertyVariables>
-						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-						<jboss.home>${project.basedir}/target/wildfly-${wildfly.server.version}</jboss.home>
-						<module.path>${project.basedir}/target/wildfly-${wildfly.server.version}/modules</module.path>
-					</systemPropertyVariables>
-					<redirectTestOutputToFile>false</redirectTestOutputToFile>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 </project>

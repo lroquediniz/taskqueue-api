@@ -24,6 +24,7 @@
 							<th translate="label.descricao"></th>
 							<th translate="label.esforco"></th>
 							<th translate="label.pessoa"></th>
+							<th translate="label.status"></th>
 						</tr>
 					</thead>
 					<tbody id="search-results-body">
@@ -31,6 +32,7 @@
 							<td ><a href="#/Atividades/edit/{{result.id}}" ng-bind="result.descricao"></a></td>
 							<td ><a href="#/Atividades/edit/{{result.id}}" ng-bind="result.esforco"></a></td>
 							<td ><a href="#/Atividades/edit/{{result.id}}" ng-bind="result.pessoa.nome"></a></td>
+							<td ><a href="#/Atividades/edit/{{result.id}}" translate="{{result.status.descricao}}"></a></td>
 						</tr>
 					</tbody>
 				</table>
