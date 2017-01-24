@@ -6,9 +6,9 @@ Este projeto provê um serviço de processamento de fila de atividades.
 
 ## Tecnologias
 
-- [Java EE 7](https://docs.oracle.com/javaee/7/tutorial/"Java EE 7")
-- [Angular JS](https://angularjs.org/"Angular JS")
-- [Wildfly 10.1.0.Final](http://wildfly.org/ "Wildfly 10.1.0.Final")
+- [Java EE 7](https://docs.oracle.com/javaee/7/tutorial/)
+- [Angular JS](https://angularjs.org/)
+- [Wildfly 10.1.0.Final](http://wildfly.org/)
 
 
 ## FAQ
