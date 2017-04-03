@@ -22,6 +22,3 @@ Este projeto provê um serviço de processamento de fila de atividades.
 ./run.sh
 ```
 
-### Qual o tipo de autenticação necessária?
-Não requer nenhum tipo de autenticação.
-
